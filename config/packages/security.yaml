@@ -1,24 +1,39 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+
+    encoders:
+        App\User\User:
+            id: App\User\UserEncoder
+
     providers:
-        in_memory: { memory: ~ }
+        user_provider:
+            id: App\User\UserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             anonymous: true
+            switch_user: true
 
-            # activate different ways to authenticate
+            logout:
+                path:   user_logout
+                target: app_welcome
 
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            form_login:
+                provider:            user_provider
+                login_path:          user_login
+                check_path:          user_login_check
+                default_target_path: app_welcome
 
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
+                username_parameter:  username
+                password_parameter:  password
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+                csrf_parameter:       _csrf_token
+                csrf_token_id:        authenticate
+                csrf_token_generator: security.csrf.token_manager
+
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

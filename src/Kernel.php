@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Core\ActionInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -27,6 +28,7 @@ class Kernel extends BaseKernel
 
     public function registerBundles()
     {
+        /** @noinspection PhpIncludeInspection */
         $contents = require $this->getProjectDir().'/config/bundles.php';
         foreach ($contents as $class => $envs) {
             if (isset($envs['all']) || isset($envs[$this->environment])) {
@@ -57,5 +59,11 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+    }
+    protected function build(ContainerBuilder $container)
+    {
+        $container->registerForAutoconfiguration(ActionInterface::class)
+            ->addTag('controller.service_arguments')
+        ;
     }
 }

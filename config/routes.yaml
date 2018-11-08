@@ -1,3 +1,7 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app_welcome:
+    path: /
+    controller: App\Welcome\WelcomeAction
+
+app_user:
+    resource: "../src/User/routes.yaml"
+    prefix: /user
