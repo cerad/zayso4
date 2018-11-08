@@ -4,15 +4,17 @@ namespace App\Project;
 
 
 use App\Core\EscapeTrait;
-use App\Project\Project;
+//use App\Project\Project;
 
 class ProjectPageTemplate
 {
     use EscapeTrait;
 
-    private $project;
-    private $title;
-    private $content;
+    protected $project;
+    protected $title;
+    protected $content;
+
+    protected $showHeaderImage = false;
 
     public function __construct(Project $project)
     {
@@ -50,9 +52,7 @@ class ProjectPageTemplate
 </html>
 EOT;
     }
-
-    /*  DOC & Header  */
-    private function renderHead() : string
+    protected function renderHead() : string
     {
         return <<<EOT
 
@@ -72,18 +72,64 @@ EOT;
 </head>
 EOT;
     }
-    private function renderHeader() : string
+    protected function renderHeader()
     {
-        return '';
+        if (!$this->showHeaderImage) {
+            $html = <<<EOT
+<div id="banner">
+  <h1>
+    <a href="http://www.aysonationalgames.org/" target="_blank">
+      <img src="/images/ng2019/icon.png" height="30" alt="National Games">
+    </a>
+    {$this->escape($this->title)}
+  </h1>
+</div>
+EOT;
+        } else {
+            $html = <<<EOT
+<div class="skBanners">
+  <a href="http://www.aysonationalgames.org/" target="_blank">
+    <img class="width-90" src="/images/ng2019/banner.png">
+  </a>
+  <div class="skFont width-90 display:inline-block">
+    AYSO WELCOMES YOU TO WAIPIO PENINSULA SOCCER COMPLEX, WAIPAHU, HAWAII, June 30 - July 7, 2019
+  </div>
+</div>
+EOT;
+        }
+        return $html;
     }
-    private function renderFooter() : string
+    protected function renderFooter()
     {
-        return '';
+        $support = $this->project->support;
+
+        return <<<EOT
+<div class="cerad-footer">
+  <br />
+  <hr>
+  <p> zAYSO - For assistance contact {$support->name} at
+    <a href="mailto:{$support->email}?subject={$support->subject}">{$support->email}</a>
+      or {$support->phone} 
+  </p>
+  <p>Version {$this->project->version}</p>
+</div>
+<div class="clear-both"></div>
+EOT;
     }
-    private function renderScripts() : string
+    protected function renderScripts()
     {
-        return '';
+        return <<<EOT
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- Latest compiled and minified JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.2/js/fileinput.min.js"></script>
+<!-- compiled project js -->
+<script src="/js/zayso.js"></script>
+EOT;
     }
+
     private function renderTopMenu() : string
     {
         return '';
