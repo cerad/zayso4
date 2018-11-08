@@ -1,15 +1,25 @@
 <?php
 
-namespace App\Core;
+namespace App\Project;
 
 
-class PageTemplate
+use App\Core\EscapeTrait;
+use App\Project\Project;
+
+class ProjectPageTemplate
 {
     use EscapeTrait;
 
-    private $title = 'NG2019';
+    private $project;
+    private $title;
     private $content;
 
+    public function __construct(Project $project)
+    {
+        $this->project = $project;
+        $this->title   = $project->title;
+    }
+    // Allow for overriding for testing maybe
     public function setTitle(string $title): void
     {
         $this->title = $title;

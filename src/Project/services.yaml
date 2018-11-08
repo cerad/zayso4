@@ -1,0 +1,15 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Project\ProjectFactory:
+
+    App\Project\Project:
+        factory: 'App\Project\ProjectFactory:create'
+        arguments: ['%env(CURRENT_PROJECT)%']
+
+    App\Project\ProjectPageTemplate:
+        $project: '@App\Project\Project'

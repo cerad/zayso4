@@ -1,0 +1,17 @@
+# This import attempt did not work
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\User\:
+        resource: './*'
+        exclude:  './{User.php,UserConnection.php}'
+
+    App\User\UserConnection: '@doctrine.dbal.user_connection'
+
+    App\User\UserEncoder:
+      $master: '%env(USER_MASTER_PASSWORD)%'
