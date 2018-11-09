@@ -1,7 +1,19 @@
 schedule_game:
-  path:       /game
-  controller: App\Schedule\Game\ScheduleGameAction
+    path:       /game
+    controller: App\Schedule\Game\GameAction
 
 schedule_team:
-  path:       /team
-  controller: App\Schedule\Team\ScheduleTeamAction
+    path:       /team
+    controller: App\Schedule\Team\TeamAction
+
+schedule_official:
+    path:       /official
+    controller: App\Schedule\Official\OfficialAction
+
+schedule_assignor:
+    path:       /assignor
+    controller: App\Schedule\Assignor\AssignorAction
+
+schedule_my:
+    path:       /my
+    controller: App\Schedule\Assignor\MyAction

@@ -62,3 +62,4 @@ security:
             - ROLE_SCORE_ADMIN
             - ROLE_REFEREE_ADMIN
             - ROLE_ALLOWED_TO_SWITCH
+            # ROLE_REFEREE

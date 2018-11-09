@@ -20,6 +20,14 @@ trait AuthorizationTrait
     {
         return $this->authChecker->isGranted($attributes, $subject);
     }
+    protected function isLoggedIn() : bool
+    {
+        return $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
+    }
+    protected function isReferee() : bool
+    {
+        return $this->isGranted('ROLE_REFEREE');
+    }
     protected function denyAccessUnlessGranted($attributes, $subject = null, string $message = 'Access Denied.')
     {
         if (!$this->isGranted($attributes, $subject)) {

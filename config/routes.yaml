@@ -25,3 +25,7 @@ app_schedule:
 app_results:
     resource: "../src/Results/routes.yaml"
     prefix: /results
+
+app_reg_person:
+    resource: "../src/RegPerson/routes.yaml"
+    prefix: /reg-person

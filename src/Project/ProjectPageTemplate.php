@@ -156,9 +156,10 @@ EOT;
    <!-- Collect the nav links, forms, and other content for toggling -->
    <div id="topmenu" class="collapse navbar-collapse">
 EOT;
-        $html .= $this->renderMenuForGuest();
+        // todo collapse some of this down
+        $html .= $this->renderTopMenuLeft();
 
-        //$html .= $this->renderMenuForUser();
+        $html .= $this->renderTopMenuRight();
 
         $html .= <<<EOT
   </div><!-- navbar-collapse -->
@@ -166,18 +167,18 @@ EOT;
 EOT;
         return $html;
     }
-    protected function renderMenuForGuest() : string
+    protected function renderTopMenuLeft() : string
     {
         $html = <<<EOT
 <ul class="nav navbar-nav">
 EOT;
-        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($this->isLoggedIn()) {
             $html .= <<<EOT
-{$this->renderHome()}
+<li><a href="{$this->generateUrl('app_home')}">HOME</a></li>
 EOT;
         } else {
             $html .= <<<EOT
-{$this->renderWelcome()}
+<li><a href="{$this->generateUrl('app_welcome')}">WELCOME</a></li>
 EOT;
         }
         $html .= <<<EOT
@@ -188,24 +189,28 @@ EOT;
 EOT;
         return $html;
     }
-    protected function renderHome() : string
+    protected function renderTopMenuRight() : string
     {
-        return <<<EOT
-<li>
-  <a href="{$this->generateUrl('app_home')}">HOME</a>
-</li>
+        if (!$this->isLoggedIn()) {
+            return '';
+        }
+        $html = <<<EOT
+<ul class="nav navbar-nav navbar-right">
 EOT;
-    }
-    protected function renderWelcome() : string
-    {
-        return <<<EOT
-<li>
-  <a href="{$this->generateUrl('app_welcome')}">WELCOME</a>
-</li>
+        $html .= $this->renderRefereeSchedules();
+        $html .= $this->renderMyAccount();
+        $html .= $this->renderAdmin();
+        $html .= $this->renderSignOut();
+        $html .= <<<EOT
+</ul>
 EOT;
+        return $html;
     }
     protected function renderAdmin() : string
     {
+        if (!$this->isGranted('ROLE_STAFF') ) {
+            return '';
+        }
         return <<<EOT
 <li>
   <a href="{$this->generateUrl('app_admin')}">ADMIN</a>
@@ -258,5 +263,70 @@ EOT;
 </li>
 EOT;
         return $html;
+    }
+    protected function renderSignOut()
+    {
+        //$userName = $this->escape($this->getUser()->getPersonName());
+        $userName = 'fake';
+        $userUrl  = $this->generateUrl('user_logout');
+        if ($this->isGranted('ROLE_ADMIN')){
+            $userLabel = 'SIGN OUT ' . $userName;
+        } else {
+            $userLabel = 'SIGN OUT ';
+        }
+
+        if ($this->isGranted('ROLE_PREVIOUS_ADMIN')) {
+            $userUrl = $this->generateUrl('app_admin',['_switch_user' => '_exit']);
+            $userLabel = 'SU EXIT ' . $userName;
+        }
+        return <<<EOT
+<li><a href="{$userUrl}">{$userLabel}</a></li>
+EOT;
+    }
+    protected function renderRefereeSchedules() : string
+    {
+        if (!$this->showResultsMenu) {
+            return '';
+        }
+        if (!$this->isGranted('ROLE_REFEREE') && !$this->isGranted('ROLE_ASSIGNOR')) {
+            return '';
+        }
+        $html = <<<EOT
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">REFEREES <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+EOT;
+        if ($this->isGranted('ROLE_REFEREE')) {
+            $html .= <<<EOT
+<li><a href="{$this->generateUrl('schedule_official')}">REQUEST ASSIGNMENTS</a></li>
+EOT;
+        }
+        if ($this->isGranted('ROLE_ASSIGNOR')) {
+            $html .= <<<EOT
+<li><a href="{$this->generateUrl('schedule_assignor')}">ASSIGNOR SCHEDULE</a></li>
+EOT;
+        }
+        $html .= <<<EOT
+  </ul>
+</li>
+EOT;
+        return $html;
+    }
+    protected function renderMyAccount() : string
+    {
+        if (!$this->showResultsMenu) {
+            return '';
+        }
+        return <<<EOT
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MY STUFF<span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="{$this->generateUrl('app_home')}">MY INFO</a></li>
+    <li><a href="{$this->generateUrl('reg_person_update')}">MY PLANS & AVAILABILITY</a></li>
+    <li><a href="{$this->generateUrl('schedule_my')}">MY SCHEDULE</a></li>
+    <li><a href="{$this->generateUrl('reg_person_persons_update')}">MY CREW</a></li>
+    <li><a href="{$this->generateUrl('reg_person_teams_update')}">MY TEAMS</a></li>
+  </ul>
+EOT;
     }
 }
