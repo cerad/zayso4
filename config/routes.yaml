@@ -2,6 +2,26 @@ app_welcome:
     path: /
     controller: App\Welcome\WelcomeAction
 
+app_home:
+    path: /home
+    controller: App\Home\HomeAction
+
+app_admin:
+    path: /admin
+    controller: App\Admin\AdminAction
+
+app_text_alerts:
+    path: /text-alerts
+    controller: App\TextAlerts\TextAlertsAction
+
 app_user:
     resource: "../src/User/routes.yaml"
     prefix: /user
+
+app_schedule:
+    resource: "../src/Schedule/routes.yaml"
+    prefix: /schedule
+
+app_results:
+    resource: "../src/Results/routes.yaml"
+    prefix: /results

@@ -1,0 +1,17 @@
+# Results
+
+results_poolplay:
+  path:       /poolplay
+  controller: App\Results\Poolplay\PoolplayAction
+
+results_medalround:
+  path:       /medalround
+  controller: App\Results\Medalround\MedalroundAction
+
+results_sportsmanship:
+  path:       /sportsmanship
+  controller: App\Results\Sportsmanship\SportsmanshipAction
+
+results_final:
+  path:       /final
+  controller: App\Results\Final\FinalAction

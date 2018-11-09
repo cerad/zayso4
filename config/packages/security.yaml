@@ -37,3 +37,28 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_USER:           []
+        ROLE_STAFF:          [ROLE_USER]
+        ROLE_REFEREE:        [ROLE_USER]
+
+        ROLE_SCORE_ENTRY:    [ROLE_STAFF]
+        ROLE_SCORE_ADMIN:    [ROLE_STAFF, ROLE_SCORE_ENTRY]
+
+        ROLE_ASSIGNOR:       [ROLE_STAFF]
+
+        ROLE_ASSIGNOR_ADMIN:
+            - ROLE_ASSIGNOR
+
+        ROLE_REFEREE_ADMIN:
+            - ROLE_STAFF
+            - ROLE_ASSIGNOR_ADMIN
+            - ROLE_SCORE_ENTRY
+
+        ROLE_ADMIN:
+            - ROLE_STAFF
+            - ROLE_ASSIGNOR_ADMIN
+            - ROLE_SCORE_ADMIN
+            - ROLE_REFEREE_ADMIN
+            - ROLE_ALLOWED_TO_SWITCH

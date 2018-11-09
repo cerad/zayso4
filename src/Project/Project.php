@@ -2,6 +2,9 @@
 
 namespace App\Project;
 
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 /**
  * @property-read string $id
  * @property-read string $slug
@@ -30,8 +33,8 @@ class Project
     public $version;
 
 
-    public function __construct()
+    public function __construct(RouterInterface $router, AuthorizationCheckerInterface $authChecker)
     {
-        $this->pageTemplate = new ProjectPageTemplate($this);
+        $this->pageTemplate = new ProjectPageTemplate($this,$router,$authChecker);
     }
 }

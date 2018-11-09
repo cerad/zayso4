@@ -2,25 +2,36 @@
 
 namespace App\Project;
 
-
+use App\Core\AuthorizationTrait;
 use App\Core\EscapeTrait;
-//use App\Project\Project;
+use App\Core\RouterTrait;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ProjectPageTemplate
 {
     use EscapeTrait;
+    use RouterTrait;
+    use AuthorizationTrait;
 
     protected $project;
     protected $title;
     protected $content;
 
-    protected $showHeaderImage = false;
+    protected $showHeaderImage  = false;
+    protected $showResultsMenu  = true;
+    protected $showScheduleMenu = true;
+    protected $showFinalResults = true;
 
-    public function __construct(Project $project)
+    public function __construct(Project $project, RouterInterface $router, AuthorizationCheckerInterface $authChecker)
     {
         $this->project = $project;
         $this->title   = $project->title;
+
+        $this->router      = $router;
+        $this->authChecker = $authChecker;
     }
+
     // Allow for overriding for testing maybe
     public function setTitle(string $title): void
     {
@@ -72,7 +83,7 @@ EOT;
 </head>
 EOT;
     }
-    protected function renderHeader()
+    protected function renderHeader() : string
     {
         if (!$this->showHeaderImage) {
             $html = <<<EOT
@@ -99,7 +110,7 @@ EOT;
         }
         return $html;
     }
-    protected function renderFooter()
+    protected function renderFooter() : string
     {
         $support = $this->project->support;
 
@@ -116,7 +127,7 @@ EOT;
 <div class="clear-both"></div>
 EOT;
     }
-    protected function renderScripts()
+    protected function renderScripts() : string
     {
         return <<<EOT
 <!-- Placed at the end of the document so the pages load faster -->
@@ -129,9 +140,123 @@ EOT;
 <script src="/js/zayso.js"></script>
 EOT;
     }
-
-    private function renderTopMenu() : string
+    protected function renderTopMenu() : string
     {
-        return '';
+        $html = <<<EOT
+<nav class="navbar navbar-default">          
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topmenu">
+       <span class="sr-only">Toggle navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+   </div>  <!-- navbar-header -->
+           
+   <!-- Collect the nav links, forms, and other content for toggling -->
+   <div id="topmenu" class="collapse navbar-collapse">
+EOT;
+        $html .= $this->renderMenuForGuest();
+
+        //$html .= $this->renderMenuForUser();
+
+        $html .= <<<EOT
+  </div><!-- navbar-collapse -->
+</nav>
+EOT;
+        return $html;
+    }
+    protected function renderMenuForGuest() : string
+    {
+        $html = <<<EOT
+<ul class="nav navbar-nav">
+EOT;
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $html .= <<<EOT
+{$this->renderHome()}
+EOT;
+        } else {
+            $html .= <<<EOT
+{$this->renderWelcome()}
+EOT;
+        }
+        $html .= <<<EOT
+{$this->renderTopMenuSchedule()}
+{$this->renderTopMenuResults()}
+{$this->renderTopMenuTextAlerts()}
+</ul>
+EOT;
+        return $html;
+    }
+    protected function renderHome() : string
+    {
+        return <<<EOT
+<li>
+  <a href="{$this->generateUrl('app_home')}">HOME</a>
+</li>
+EOT;
+    }
+    protected function renderWelcome() : string
+    {
+        return <<<EOT
+<li>
+  <a href="{$this->generateUrl('app_welcome')}">WELCOME</a>
+</li>
+EOT;
+    }
+    protected function renderAdmin() : string
+    {
+        return <<<EOT
+<li>
+  <a href="{$this->generateUrl('app_admin')}">ADMIN</a>
+</li>
+EOT;
+    }
+    protected function renderTopMenuSchedule() : string
+    {
+        if (!$this->showScheduleMenu) {
+            return '';
+        }
+        return <<<EOT
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SCHEDULES <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="{$this->generateUrl('schedule_game' )}">GAME    SCHEDULES</a></li>
+    <li><a href="{$this->generateUrl('schedule_team' )}">TEAM    SCHEDULES</a></li>
+  </ul>
+</li>
+EOT;
+    }
+    protected function renderTopMenuTextAlerts() : string
+    {
+        $html = <<<EOT
+<li><a href="{$this->generateUrl('app_text_alerts')}">TEXT ALERTS</a></li>
+EOT;
+        return $html;
+    }
+    protected function renderTopMenuResults() : string
+    {
+        if (!$this->showResultsMenu) {
+            return '';
+        }
+
+        $html = <<<EOT
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">RESULTS <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="{$this->generateUrl('results_poolplay')}">POOL PLAY</a></li>
+    <li><a href="{$this->generateUrl('results_medalround')}">MEDAL ROUND</a></li>
+    <li><a href="{$this->generateUrl('results_sportsmanship')}">SPORTSMANSHIP</a></li>
+EOT;
+        if ($this->isGranted('ROLE_ADMIN') OR $this->showFinalResults) {
+            $html .= <<<EOT
+<li><a href="{$this->generateUrl('results_final')}">FINAL STANDINGS</a></li>
+EOT;
+        }
+        $html .= <<<EOT
+  </ul>
+</li>
+EOT;
+        return $html;
     }
 }

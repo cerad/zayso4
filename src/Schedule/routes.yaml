@@ -1,0 +1,7 @@
+schedule_game:
+  path:       /game
+  controller: App\Schedule\Game\ScheduleGameAction
+
+schedule_team:
+  path:       /team
+  controller: App\Schedule\Team\ScheduleTeamAction
