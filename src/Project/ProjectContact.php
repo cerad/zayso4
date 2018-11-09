@@ -26,4 +26,15 @@ class ProjectContact
     {
         $this->subject = $subject;
     }
+    public function withSubject(string $subject) : ProjectContact
+    {
+        $contact = clone $this;
+
+        /** @noinspection Annotator */
+        // $contact->subject = $subject;
+
+        $contact->setSubject($subject);
+
+        return $contact;
+    }
 }

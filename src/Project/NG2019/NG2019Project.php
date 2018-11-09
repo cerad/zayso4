@@ -15,6 +15,11 @@ class NG2019Project extends Project
 
     public $version = '2018-11-08';
 
+    public $welcomeMessage = 'Welcome to the AYSO National Games 2019';
+
+    protected $pageTemplateClass    = 'App\\Project\\NG2019\\PageTemplate';
+    protected $welcomeTemplateClass = 'App\\Project\\NG2019\\WelcomeTemplate';
+
     public function __construct(RouterInterface $router, AuthorizationCheckerInterface $authChecker)
     {
         parent::__construct($router,$authChecker);
@@ -28,12 +33,9 @@ class NG2019Project extends Project
             '808-286-9280',
             'NG2019 schedule question...');
 
-        $this->assignor = clone $this->scheduler;
-        $this->assignor->setSubject('NG2019 Referee Assignments');
+        $this->assignor = $this->scheduler->withSubject('NG2019 Referee Assignments');
 
-        $this->administrator = clone $this->scheduler;
-        $this->administrator->setSubject('NG2019 Referee Administrator');
-
+        $this->administrator = $this->scheduler->withSubject('NG2019 Referee Administrator');
 
     }
 }

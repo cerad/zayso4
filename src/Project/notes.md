@@ -6,3 +6,4 @@ Be nice to typehint against CurrentProject or maybe CurrentProjectInterface
 
 Typehint against Project yields the current project?  Seems hackish but it works okay.
 
+Custom page and welcome templates for each project.

@@ -24,6 +24,10 @@ class WelcomeAction implements ActionInterface
 
     public function __invoke(Request $request) : Response
     {
-        return new Response($this->project->pageTemplate->render($this->userLoginForm->render()));
+        $welcomeTemplate = $this->project->welcomeTemplate;
+
+        $pageTemplate = $this->project->pageTemplate;
+
+        return new Response($pageTemplate->render($welcomeTemplate->render($this->userLoginForm->render())));
     }
 }

@@ -11,5 +11,3 @@ services:
         factory: 'App\Project\ProjectFactory:create'
         arguments: ['%env(CURRENT_PROJECT)%']
 
-    App\Project\ProjectPageTemplate:
-        $project: '@App\Project\Project'

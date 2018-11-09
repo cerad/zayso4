@@ -8,7 +8,7 @@ use App\Core\RouterTrait;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class ProjectPageTemplate
+class PageTemplate
 {
     use EscapeTrait;
     use RouterTrait;
@@ -63,6 +63,7 @@ class ProjectPageTemplate
 </html>
 EOT;
     }
+    // todo adjust image links
     protected function renderHead() : string
     {
         return <<<EOT
