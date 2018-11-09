@@ -15,3 +15,6 @@ services:
 
     App\User\UserEncoder:
       $master: '%env(USER_MASTER_PASSWORD)%'
+
+    App\User\Authen\ProviderFactory:
+        $providers: '%user_authen_providers%'

@@ -1,8 +1,7 @@
 # User routes
 user_login:
-    path: /login
-    defaults:
-        _controller: App\Welcome\WelcomeAction
+    path:       /login
+    controller: App\Welcome\WelcomeAction
 
 user_login_check:
     path:  /login-check
@@ -43,12 +42,9 @@ user_password_reset_response:
 
 # user social network
 user_authen_connect:
-    path:  /authen/connect/{providerName}
-    defaults:
-        _controller: user_authen_connect_controller
+    path:       /authen/connect/{providerName}
+    controller: App\User\Authen\ConnectAction
 
 user_authen_callback:
-    path:  /authen/callback
-    defaults:
-        _controller: user_authen_callback_controller
-
+    path:       /authen/callback
+    controller: App\User\Authen\CallbackAction
