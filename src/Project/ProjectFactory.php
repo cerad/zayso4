@@ -2,27 +2,20 @@
 
 namespace App\Project;
 
-
-use App\Project\NG2019\NG2019Project;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Psr\Container\ContainerInterface;
 
 class ProjectFactory
 {
-    private $router;
-    private $authChecker;
+    private $container;
 
-    public function __construct(RouterInterface $router, AuthorizationCheckerInterface $authChecker)
+    public function __construct(ContainerInterface $container)
     {
-        $this->router = $router;
-        $this->authChecker = $authChecker;
+        $this->container = $container;
     }
-
-    public function create(string $slug) : Project
+    public function create(string $projectClass) : Project
     {
-        switch ($slug) {
-            case 'ng2019': return new NG2019Project($this->router,$this->authChecker);
-        }
-        throw new \InvalidArgumentException('ProjectFactory::create ' . $slug);
+        return $this->container->get($projectClass);
+
+        //throw new \InvalidArgumentException('ProjectFactory::create ' . $projectClass);
     }
 }

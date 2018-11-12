@@ -4,8 +4,7 @@ namespace App\Project\NG2019;
 
 use App\Project\Project;
 use App\Project\ProjectContact;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Psr\Container\ContainerInterface;
 
 class NG2019Project extends Project
 {
@@ -20,9 +19,9 @@ class NG2019Project extends Project
     protected $pageTemplateClass    = 'App\\Project\\NG2019\\PageTemplate';
     protected $welcomeTemplateClass = 'App\\Project\\NG2019\\WelcomeTemplate';
 
-    public function __construct(RouterInterface $router, AuthorizationCheckerInterface $authChecker)
+    public function __construct(ContainerInterface $container)
     {
-        parent::__construct($router,$authChecker);
+        parent::__construct($container);
 
         $this->support = new ProjectContact('Art Hundiak','ahundiak@gmail.com','256-457-5943','NG2019 zAYSO question...');
         $this->system  = new ProjectContact('Zayso Admin','noreply@zayso.org','');

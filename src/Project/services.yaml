@@ -3,11 +3,25 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: false
+        public: true # So projected related services are available
+
+    App\Project\:
+        resource: './*'
+        exclude:  './{ProjectContact.php}'
 
     App\Project\ProjectFactory:
+        public: false
 
     App\Project\Project:
+        public: false
         factory: 'App\Project\ProjectFactory:create'
         arguments: ['%env(CURRENT_PROJECT)%']
 
+    #App\Project\NG2019\NG2019Project:
+    #    public: true
+
+    #App\Project\NG2019\PageTemplate:
+    #    public: true
+
+    #App\Project\NG2019\WelcomeTemplate:
+    #    public: true

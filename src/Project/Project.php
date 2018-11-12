@@ -2,8 +2,7 @@
 
 namespace App\Project;
 
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * @property-read string $id
@@ -18,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  *
  * @property-read string $welcomeMessage
  */
-class Project
+abstract class Project
 {
     public $id;
     public $slug;
@@ -38,24 +37,21 @@ class Project
     protected $pageTemplateClass;
     protected $welcomeTemplateClass;
 
-    protected $router;
-    protected $authChecker;
+    protected $container;
 
-    public function __construct(RouterInterface $router, AuthorizationCheckerInterface $authChecker)
+    public function __construct(ContainerInterface $container)
     {
-        $this->router = $router;
-        $this->authChecker = $authChecker;
-        //$this->pageTemplate = new ProjectPageTemplate($this,$router,$authChecker);
+        $this->container    = $container;
     }
     public function __get($name)
     {
         switch ($name) {
 
             case 'pageTemplate':
-                return new $this->pageTemplateClass($this, $this->router, $this->authChecker);
+                return $this->container->get($this->pageTemplateClass);
 
             case 'welcomeTemplate':
-                return new $this->welcomeTemplateClass($this, $this->router);
+                return $this->container->get($this->welcomeTemplateClass);
         }
         return null;
     }

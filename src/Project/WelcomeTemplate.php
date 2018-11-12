@@ -5,19 +5,16 @@ namespace App\Project;
 use App\Core\EscapeTrait;
 use App\Core\RouterTrait;
 
-use Symfony\Component\Routing\RouterInterface;
-
-class WelcomeTemplate
+abstract class WelcomeTemplate
 {
     use EscapeTrait;
     use RouterTrait;
 
     protected $project;
 
-    public function __construct(Project $project, RouterInterface $router)
+    public function __construct(Project $project)
     {
         $this->project = $project;
-        $this->router  = $router;
     }
     public function render(string $loginForm) : string
     {

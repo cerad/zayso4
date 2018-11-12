@@ -2,17 +2,15 @@
 
 namespace App\Project;
 
-use App\Core\AuthorizationTrait;
 use App\Core\EscapeTrait;
 use App\Core\RouterTrait;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use App\Core\SecurityTrait;
 
-class PageTemplate
+abstract class PageTemplate
 {
     use EscapeTrait;
     use RouterTrait;
-    use AuthorizationTrait;
+    use SecurityTrait;
 
     protected $project;
     protected $title;
@@ -23,13 +21,10 @@ class PageTemplate
     protected $showScheduleMenu = true;
     protected $showFinalResults = true;
 
-    public function __construct(Project $project, RouterInterface $router, AuthorizationCheckerInterface $authChecker)
+    public function __construct(Project $project)
     {
         $this->project = $project;
         $this->title   = $project->title;
-
-        $this->router      = $router;
-        $this->authChecker = $authChecker;
     }
 
     // Allow for overriding for testing maybe
@@ -267,8 +262,7 @@ EOT;
     }
     protected function renderSignOut()
     {
-        //$userName = $this->escape($this->getUser()->getPersonName());
-        $userName = 'fake';
+        $userName = $this->escape($this->getUser()->getPersonName());
         $userUrl  = $this->generateUrl('user_logout');
         if ($this->isGranted('ROLE_ADMIN')){
             $userLabel = 'SIGN OUT ' . $userName;
