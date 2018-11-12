@@ -27,5 +27,5 @@ app_results:
     prefix: /results
 
 app_reg_person:
-    resource: "../src/RegPerson/routes.yaml"
+    resource: "../src/Reg/Person/routes.yaml"
     prefix: /reg-person

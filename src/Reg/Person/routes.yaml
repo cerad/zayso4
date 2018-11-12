@@ -2,13 +2,13 @@
 
 reg_person_update:
   path:       /update
-  controller: App\RegPerson\Update\UpdateAction
+  controller: App\Reg\Person\Update\UpdateAction
 
 reg_person_persons_update:
   path:       /persons/update
-  controller: App\RegPerson\Persons\UpdateAction
+  controller: App\Reg\Person\Persons\UpdateAction
 
 reg_person_teams_update:
   path:       /teams/update
-  controller: App\RegPerson\Teams\UpdateAction
+  controller: App\Reg\Person\Teams\UpdateAction
 

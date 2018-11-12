@@ -17,6 +17,15 @@ doctrine:
                     collate: utf8mb4_unicode_ci
                 wrapper_class: App\User\UserConnection
                 url: '%env(DATABASE_URL_REG)%'
+            reg:
+                driver: 'pdo_mysql'
+                server_version: '5.7'
+                charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+                wrapper_class: App\Reg\RegConnection
+                url: '%env(DATABASE_URL_REG)%'
 
  #   orm:
  #       auto_generate_proxy_classes: '%kernel.debug%'

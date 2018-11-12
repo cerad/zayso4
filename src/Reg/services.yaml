@@ -1,0 +1,15 @@
+# Reg
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Reg\:
+        resource: './*'
+        exclude:  './{RegConnection.php}'
+
+    App\Reg\RegConnection: '@doctrine.dbal.reg_connection'
+

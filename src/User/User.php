@@ -22,11 +22,11 @@ class User implements UserInterface, \Serializable
     private $roles = ['ROLE_USER'];
 
     // Not used but in the database table
-    private $providerKey;
+    //private $providerKey;
+    //private $projectId;
 
     // Dynamically set via user provider
-    private $projectId;
-    private $registered;
+    private $registered; // for current project, still need?
 
     // For the UserInterface
     public function getRoles()
@@ -75,10 +75,10 @@ class User implements UserInterface, \Serializable
         return;
     }
     // Try to make these go away
-    public function getProjectId()
-    {
-        return $this->projectId;
-    }
+    //public function getProjectId()
+    //{
+    //    return $this->projectId;
+    //}
     public function getPersonId()
     {
         return $this->personId;
@@ -87,23 +87,24 @@ class User implements UserInterface, \Serializable
     {
         return $this->name;
     }
-    public function getRegPersonId()
-    {
-        return $this->projectId . ':' . $this->personId;
-    }
+    //public function getRegPersonId()
+    //{
+    //    return $this->projectId . ':' . $this->personId;
+    //}
     public static function create(array $data) : User
     {
         $user = new self();
 
-        $user->name     = $data['name'];
-        $user->username = $data['username'];
-        $user->email    = $data['email'];
-        $user->salt     = $data['salt'];
-        $user->password = $data['password'];
-        $user->enabled  = $data['enabled'];
-        $user->locked   = $data['locked'];
-        $user->personId = $data['personId'];
-        $user->roles    = $data['roles'];
+        $user->name       = $data['name'];
+        $user->username   = $data['username'];
+        $user->email      = $data['email'];
+        $user->salt       = $data['salt'];
+        $user->password   = $data['password'];
+        $user->enabled    = $data['enabled'];
+        $user->locked     = $data['locked'];
+        $user->personId   = $data['personId'];
+        $user->roles      = $data['roles'];
+        $user->registered = $data['registered'];
 
         return $user;
     }

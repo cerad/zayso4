@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 class NG2019Project extends Project
 {
-    public $id    = 'AYSONationalGames2019';
+    public $id    = 'AYSONationalGames2016'; // 'AYSONationalGames2019';
     public $slug  = 'ng2019';
     public $title = 'NG2019';
 
