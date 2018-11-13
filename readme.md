@@ -24,4 +24,7 @@ config/packages/parameters.yaml includes secret parameters not suitable for env 
 might eventually just move all env stuff to it.
 
 Use webpack instead of gulp for asset management?
+Sticking with gulp for now.  But moved assets into same directory used by encore.
+Still need to deal with tournament specific images.
+
 

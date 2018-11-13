@@ -1,0 +1,156 @@
+.panel {
+  margin: 10px;
+  line-height: 2em;
+}
+.panel-float-left {
+    float: left;
+    height: 260px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+ }
+ 
+.panel-float-clear {
+    clear: both;
+ }
+ 
+ .container { min-width: 300px; }
+ 
+ legend { font-size: 16px; font-weight:bold; margin-top: 1em; }
+ 
+ .entry { margin-left:5px; margin-top: 5px; margin-bottom: 5px;}
+ 
+ .row { margin-bottom: 0.5em; margin-top: 0.5em; }
+ 
+ .row label.text-center, .row p.text-center  { text-align: center !important }
+
+.no-disc li { list-style: none }
+
+form { width: 100%; margin-left:auto; margin-right: auto; }
+
+.form-control { max-width: 300px; }
+
+.form-control.report-update { width: inherit; margin: 0 35px ; text-align: center; }
+
+@media (max-width: 1024px) {
+    .form-control.report-update { width: inherit; margin: 0 15px ; text-align: center; }
+}
+
+@media (max-width: 667px) {
+    .form-control.report-update { width: 120px; margin: 0 10px ; text-align: center; }
+}
+
+.panel > .form-group { margin-top: 15px; }
+
+.avail .control-label { text-align: left; margin-left: 20px; }
+
+.avail input[type=checkbox] { margin-right: 6px; }
+
+.panel-footer { padding: 0 15px; }
+
+.panel-footer .btn { margin: 7px 10px 7px 0; }
+
+.vcenter {
+    margin-top: 0.5em;
+}
+
+.width-90 { max-width: 90%; margin-left: auto; margin-right: auto; }
+
+.btn-provider { color: #000; background-color: #f5f5f5; }
+.btn {
+  margin: 10px 0 10px 10px;
+  min-width: 96px;
+}
+.tableClass {
+  width: 80%;
+  max-width: 100%;
+  border: 2px solid black;
+  margin-bottom: 0px;
+}
+
+tr.trAction { border: 1px solid black;}
+
+legend { padding-bottom: 10px; }
+
+.bg-success {
+    background-color: #dff0d8;
+}
+.bg-info {
+    background-color: #d9edf7;
+}
+.bg-warning {
+    background-color: #fcf8e3;
+}
+.bg-danger {
+    background-color: #f2dede;
+}
+.form-group {
+    margin-right: 20px;
+}
+@media only screen and (max-width: 1024px){
+    
+    .panel-float-left {
+        width: 300px;
+        margin: 5px;
+    }
+}
+
+form.cerad_common_form1 fieldset div.col-xs-10 {
+    padding: 0;
+}
+.input-group > .form-control {
+    width: 600px;
+    margin: 10px 0;
+}
+a.btn { margin-left: 10px; }
+
+.file-preview-frame {
+    width: 90% !important;
+    height: 80px !important;
+}
+
+.file-preview-other { display: none; }
+
+.file-footer-caption { width: inherit; font-size: inherit; color: inherit; }
+.file-input-test-button { display: none; }
+
+.file-actions { display: none; }
+
+hr { border-top: 1px solid #d2d2d2 }
+
+@media only screen and (max-width: 768px){
+    
+    .panel-float-left {
+        width: 320px;
+        margin: 5px;
+    }
+}
+@media only screen and (max-width: 667px){
+    
+    .panel-float-left {
+        width: 270px;
+        margin: 5px;
+    }
+}
+@media only screen and (max-width:375px) {
+    
+    .tableClass {
+        width: 100%;
+    }
+    
+    .container {
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 280px;
+        min-width: inherit;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .control-label.approved { margin-right: 20px; text-align: left }
+    
+    .control-label.control-text { font-weight: normal; text-align: left }
+
+}

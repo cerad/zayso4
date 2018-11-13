@@ -1,5 +1,9 @@
-app_welcome:
+app_index:
     path: /
+    controller: App\Welcome\WelcomeAction
+
+app_welcome:
+    path: /welcome
     controller: App\Welcome\WelcomeAction
 
 app_home:

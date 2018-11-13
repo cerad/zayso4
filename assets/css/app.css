@@ -1,0 +1,520 @@
+/*
+    * zAYSO CSS for 2019 National Games
+    * By: Rick Roberts  web.ng2016@gmail.com
+    * Version: 24 Mar 2016
+*/
+
+.sf-toolbar,.sf-toolbar * {
+border:none;
+}
+
+#status { border: 1px solid red; padding: 10px; margin: 5px;}
+
+html,body,h1,h2,h3,h4,h5,h6,p,ol,ul,li,dl,pre,address,variable,form,fieldset,blockquote,label,img {
+color:#000;
+font-family:Arial,'Trebuchet MS',sans-serif;
+font-size:small;
+margin:0;
+padding:0;
+}
+
+body {
+padding: 10px;
+}
+
+h1 {
+font-weight:700;
+font-size:16px;
+}
+
+h2 {
+vertical-align:middle;
+text-align:center;
+font-weight:700;
+padding:10px 0;
+}
+
+h3 {
+font-weight:700;
+font-size:16px!important;
+}
+
+h4 {
+color:inherit;
+font-weight:700;
+font-size:14px!important;
+}
+
+h5 {
+color:inherit;
+font-weight:700;
+font-size:12px!important;
+}
+
+strong {
+font-weight:700;
+}
+
+em {
+font-style:italic;
+}
+
+hr {
+width:100%;
+clear:both;
+margin:15px auto;
+}
+
+#layout-header td {
+vertical-align:middle;
+}
+
+#layout-header {
+display:inline-block;
+}
+
+#layout-content {
+display:inline-block;
+padding-top:4px;
+width:100%;
+}
+
+#layout-topmenu {
+clear:both;
+width:100%;
+}
+
+#layout-block {
+/*min-width:650px;
+margin-left:auto;
+margin-right:auto;*/
+}
+
+table.data {
+table-layout:auto;
+}
+
+.schedule, .standings, .results {
+  outline: thin solid #B90101;
+}
+
+
+.schedule th,.standings th,.results th,.scoring th,.my_schedule th,.row-hdr {
+width:auto;
+padding:0 8px;
+}
+
+.standings tr,.schedule tr,.results tr {
+  border-left: thin solid #B90101;
+  border-right: thin solid #B90101;
+  border-bottom: thin solid #B90101;
+  border: none;
+}
+
+#schedule table tr, #standings table tr, #results table tr {
+  border: none;
+}
+
+.standings td tr,.schedule td tr,.results td tr {
+outline:none;
+}
+
+.app_table th,.assign th {
+line-height:2em;
+}
+
+.schedule tr,.standings tr,.results tr {
+line-height:2em;
+height:2em;
+border: black;
+}
+
+.schedule tr:nth-child(odd),.standings tr:nth-child(odd),.results tr:nth-child(odd),#person-list tr:nth-child(odd),.my_schedule tr:nth-child(odd) {
+background:#EDEDED;
+}
+
+.schedule td,.standings td,.results td,.scoring td {
+text-align:center;
+line-height:2em;
+vertical-align:middle;
+}
+
+.tbl-title th
+.row-hdr {
+background:#B90101;
+height:2em;
+}
+
+.tbl-hdr th {
+background:#DB352F;
+height:3em;
+border:1px solid #B90101;
+}
+
+.schedule table tr:nth-child(odd),#person-list table tr:nth-child(odd),.my_schedule table tr:nth-child(odd) {
+background:inherit;
+}
+
+input[type="submit"] {
+font-size:inherit;
+padding:5px 20px;
+}
+
+.account-person-list {
+width:70%;
+line-height:1.5em;
+margin-left:auto;
+margin-right:auto;
+}
+
+form#cerad_tourn_schedule_official_search,form#cerad_tourn_schedule_search {
+padding-top:0;
+}
+
+form#cerad_tourn_schedule_official_search fieldset,form#cerad_tourn_schedule_search fieldset {
+padding-left:2%;
+line-height:2em;
+}
+
+form#cerad_tourn_schedule_official_search fieldset div label,form#cerad_tourn_schedule_search fieldset div label {
+padding-right:2em;
+padding-left:1%;
+}
+
+form#cerad_tourn_schedule_official_search fieldset div div,form#cerad_tourn_schedule_search fieldset div div {
+padding-left:1%;
+padding-bottom:10px;
+}
+
+form#cerad_tourn_schedule_official_search fieldset div input[type="text"],form#cerad_tourn_schedule_search fieldset div input[type="text"] {
+position:absolute;
+left:12em;
+}
+
+form#cerad_tourn_schedule_official_search input[type="submit"],form#cerad_tourn_schedule_search input[type="submit"] {
+float:right;
+margin-right:10%;
+}
+
+form#cerad_tourn_schedule_official_search #list_filters,form#cerad_tourn_schedule_search #list_filters {
+display:none;
+}
+
+form#cerad_tourn_schedule_official_search .required,form#cerad_tourn_schedule_search .required {
+font-weight:700;
+font-size:1.1em;
+text-decoration:underline;
+}
+
+#form_CoreTeams,#form_ExtraTeams {
+width:325px;
+height:120px;
+}
+
+.admin {
+margin-left:20px;
+width:100%;
+float:left;
+min-width:300px;
+}
+
+.admin li {
+margin-left:2em;
+line-height:2em;
+list-style:disc;
+}
+
+.admin ul {
+margin-bottom:15px;
+margin-right:30px;
+}
+
+.admin_container {
+margin-left:10px;
+width:45%;
+min-width:350px;
+float:left;
+}
+
+.import_controls {
+padding-left:40px;
+line-height:3em;
+}
+
+.import_controls form {
+padding:0 0 20px;
+}
+
+table.import_results {
+width:80%;
+padding:0 20px;
+}
+
+table#person-list td {
+max-width:200px;
+min-width:20%;
+word-wrap:break-word;
+padding:0;
+}
+
+table#person-list td table {
+width:95%;
+}
+
+table#person-list table tr {
+max-width:85%;
+}
+
+table#person-list table td {
+max-width:100%;
+min-width:45%;
+}
+
+#form_slots_1_role,#form_slots_2_role,#form_slots_3_role {
+text-align:right;
+border:0;
+background:inherit;
+}
+
+.results-legend,.schedule-legend {
+text-align:center;
+line-height:1.5em;
+}
+
+.my_schedule {
+width:80%;
+}
+
+.my_schedule th {
+width:20%;
+line-height:2em;
+}
+
+.current-teams {
+width:400px;
+}
+
+.current-teams td {
+text-align:center;
+border:solid 1px #000;
+}
+
+.text-left {
+text-align:left!important;
+}
+
+.text-right {
+text-align:right!important;
+}
+
+.dwide {
+min-width:400px;
+}
+
+root {
+display:block;
+}
+
+h3,h4 {
+color:red;
+font-weight:700;
+font-size:18px!important;
+}
+
+#layout-content h3 {
+padding:5px 20px;
+}
+
+#layout-userinfo ul {
+font-size:small;
+float:right;
+margin-right:25px;
+padding:.25em;
+}
+
+#user {
+  text-align: right;
+}
+
+table {
+font-size:inherit;
+table-layout:fixed;
+margin-left:auto;
+margin-right:auto;
+}
+
+table th,.row-hdr {
+width:auto;
+background-color:#DB352F;
+color:#fff;
+font-weight:700;
+vertical-align:middle;
+overflow:hidden;
+height:2.5em;
+border:1px solid #B90101;
+padding:0 10px;
+}
+
+table td {
+    height:inherit;
+    padding: 0 5px;
+    margin: 5px 0;
+    word-wrap: break-word;
+}
+
+table td p {
+margin:0 5px;
+}
+
+table.app_table > tbody > tr > td {
+border:1px solid;
+}
+
+table table {
+margin-left:0;
+margin-right:0;
+}
+
+table.standings, table.results { min-width: 80%; }
+
+.app_form {
+margin-left:auto;
+margin-right:auto;
+position:relative;
+}
+
+table colgroup col,#person-list th {
+width:20%;
+}
+
+.admin h2,.my_schedule td {
+text-align:left;
+}
+
+#export-link {
+padding:10px;
+}
+
+#welcome {
+  margin: -20px 10px 10px;
+  text-align: center;
+}
+
+div#layout-content {
+    min-width: 500px;
+}
+
+@media print{
+    .sf-toolbar,.sf-toolbar *,.schedule-search {
+    display:none;
+    }
+}
+
+@media only screen and  (max-width: 768px){
+    td > table {
+    display:block;
+    }
+
+    td > table td {
+    display:inline-block;
+    }
+
+    .account-person-list {
+        width: 100%;
+        line-height: 1.5em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #schedule-select {
+        margin-bottom: 20px;
+    }
+
+}
+
+@media only screen and (max-width: 767px){
+    table.schedule {
+    margin-left:auto;
+    margin-right:auto;
+    }
+
+    .cerad_common_form1 table td {
+        padding:0;
+    }
+
+    #schedule-select table td {
+        padding:inherit;
+    }
+}
+
+@media only screen and (max-width:375px){
+    body {
+        padding: 5px;
+    }
+
+}
+.cerad-common-help li {
+    list-style: disc;
+    margin-left: 30px;
+}
+
+.cerad-common-help ol li {
+    list-style: decimal;
+    margin-left: 30px;
+}
+
+.cerad-common-help ol li ol li {
+    list-style: lower-alpha;
+    margin-left: 30px;
+}
+
+.app_help li {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.cerad-footer {
+  text-align: center;
+}
+
+.cerad-footer p {
+    font-size: smaller;
+    font-style: italic;
+}
+
+.seperator {
+    margin: 3px auto;
+}
+.separator {
+    margin: 3px auto;
+}
+
+body.email { width: inherit; }
+
+p.email {
+  font-size: 12px;
+  text-align: center;
+}
+td.admin-listing {
+    width: 100px;
+    display: inline-block;
+    overflow: visible;
+    white-space: nowrap;
+    margin:0;
+}
+
+.approved { margin-right: 20px; text-align: left }
+
+.schedule-search { width: inherit; min-width: 400px; padding-bottom: 10px; margin-left: auto; margin-right: auto; }
+
+.errors ul { margin-left: 40px; }
+.errors li { color: #FF0000; }
+
+.messages ul { margin-left: 40px; font-weight: bold; }
+.messages li { color: #468c47; font-weight: bold; }
+
+table.min-width-500 { min-width: 500px; }
+table.person-update-form td { height: 34px; }
+
+.rainedout-logo-show { margin-right: 30px }
+.rainedout_logo { display: none }
+.rainedout-logo-menu { height: 2.2em; margin-top: -4px; }

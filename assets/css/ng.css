@@ -1,0 +1,40 @@
+.skArea {
+    background: #fff;
+    min-height: 100%;
+}
+
+.skBanners {
+    padding: 16px 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    vertical-align: inherit;
+    text-align: center;
+}
+
+.skHeader {
+    position: relative;
+}
+
+.skWidth {
+    width: 940px;
+    margin: auto;
+    display: table;
+    max-width: 100%;
+}
+
+.skFont {
+    font-family:  Lato, Arial, Helvetica, sans-serif;
+    font-kerning:  auto;
+    font-size: 18px;
+    font-stretch: normal;
+    font-style: italic;
+    font-variant: normal;
+    font-variant-ligatures: normal;
+    font-weight: normal;
+    color: rgb(124, 124, 124);
+}
+
+.skFont.email {
+  font-size: 14px;
+}
