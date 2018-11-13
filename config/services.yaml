@@ -23,6 +23,9 @@ services:
     App\Core\:
         resource: '../src/Core/*'
 
+    App\Home\:
+        resource: '../src/Home/*'
+
     App\Welcome\:
         resource: '../src/Welcome/*'
 

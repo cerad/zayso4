@@ -57,7 +57,7 @@ dump($userData);
         try {
             $user = $this->userProvider->loadUserByUsername($email);
             $this->loginUser($request,$user);
-            return $this->redirectToRoute('app_welcome'); // app_home
+            return $this->redirectToRoute('app_home');
         }
         catch (UsernameNotFoundException $e) {
         }
