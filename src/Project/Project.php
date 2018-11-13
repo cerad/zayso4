@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
  * @property-read string $version
  *
  * @property-read PageTemplate     $pageTemplate
+ * @property-read HomeTemplate     $homeTemplate
  * @property-read WelcomeTemplate  $welcomeTemplate
  *
  * @property-read ProjectContact $support
@@ -35,6 +36,7 @@ abstract class Project
     public $welcomeMessage; // Welcome to blah blah
 
     protected $pageTemplateClass;
+    protected $homeTemplateClass;
     protected $welcomeTemplateClass;
 
     protected $container;
@@ -49,6 +51,9 @@ abstract class Project
 
             case 'pageTemplate':
                 return $this->container->get($this->pageTemplateClass);
+
+            case 'homeTemplate':
+                return $this->container->get($this->homeTemplateClass);
 
             case 'welcomeTemplate':
                 return $this->container->get($this->welcomeTemplateClass);

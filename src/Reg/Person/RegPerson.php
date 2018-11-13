@@ -7,6 +7,8 @@ namespace App\Reg\Person;
  * @property-read string  projectId
  * @property-read string  personId
  *
+ * @property-read array  roles
+ *
  * Virtual
  * @property-read boolean isReferee
  * @property-read string  refereeBadge
@@ -35,10 +37,11 @@ class RegPerson
     public $notes;
     public $notesUser;
 
-    /** @var RegPersonRole[] */
     public $roles = [];
 
     public $avail = [];
+
+    public $plans = [];
 
     // Do this just to avoid property read only errors
     private function init($data) : void
@@ -66,6 +69,7 @@ class RegPerson
         $this->notes     = $data['notes'];
         $this->notesUser = $data['notesUser'];
 
+        $this->plans     = $data['plans'];
         $this->avail     = $data['avail'];
 
         foreach($data['roles'] as $roleData) {

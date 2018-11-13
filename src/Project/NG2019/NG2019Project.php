@@ -17,6 +17,7 @@ class NG2019Project extends Project
     public $welcomeMessage = 'Welcome to the AYSO National Games 2019';
 
     protected $pageTemplateClass    = 'App\\Project\\NG2019\\PageTemplate';
+    protected $homeTemplateClass    = 'App\\Project\\NG2019\\HomeTemplate';
     protected $welcomeTemplateClass = 'App\\Project\\NG2019\\WelcomeTemplate';
 
     public function __construct(ContainerInterface $container)

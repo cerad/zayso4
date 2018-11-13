@@ -28,12 +28,21 @@ class RegPersonRole
     private function init(array $data) : void
     {
         $this->role     = $data['role'];
-        $this->roleDate = $data['roleDate'];;
+        $this->roleDate = $data['roleDate'];
 
-        $this->badge        = $data['badge'];;
-        $this->badgeUser    = $data['badgeUser'];;
-        $this->badgeDate    = $data['badgeDate'];;
-        $this->badgeExpires = $data['badgeExpires'];;
+        $this->badge        = $data['badge'];
+        $this->badgeUser    = $data['badgeUser'];
+        $this->badgeDate    = $data['badgeDate'];
+        $this->badgeExpires = $data['badgeExpires'];
+
+        $this->active   = (bool)$data['active'];
+        $this->approved = (bool)$data['approved'];
+        $this->verified = (bool)$data['verified'];
+        $this->ready    = (bool)$data['ready'];
+
+        $this->misc  = $data['misc'];
+        $this->notes = $data['notes'];
+
     }
     static public function create(array $data) : RegPersonRole
     {

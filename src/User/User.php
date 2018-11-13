@@ -4,13 +4,21 @@ namespace App\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @property-read string $name
+ * @property-read string $email
+ * @property-read string $username
+ * @property-read string $personId
+ * @property-read array  $roles
+ */
 class User implements UserInterface, \Serializable
 {
     private $id;
-    private $name;
-    private $email;
-    private $username;
-    private $personId;
+
+    public $name;
+    public $email;
+    public $username;
+    public $personId;
 
     private $salt;
     private $password;
@@ -19,14 +27,14 @@ class User implements UserInterface, \Serializable
     private $enabled = true;
     private $locked  = false;
     
-    private $roles = ['ROLE_USER'];
+    public $roles = ['ROLE_USER'];
 
     // Not used but in the database table
     //private $providerKey;
     //private $projectId;
 
     // Dynamically set via user provider
-    private $registered; // for current project, still need?
+    public $registered; // for current project, still need?
 
     // For the UserInterface
     public function getRoles()
@@ -87,25 +95,23 @@ class User implements UserInterface, \Serializable
     {
         return $this->name;
     }
-    //public function getRegPersonId()
-    //{
-    //    return $this->projectId . ':' . $this->personId;
-    //}
+    private function init(array $data) : void
+    {
+        $this->name       = $data['name'];
+        $this->username   = $data['username'];
+        $this->email      = $data['email'];
+        $this->salt       = $data['salt'];
+        $this->password   = $data['password'];
+        $this->enabled    = $data['enabled'];
+        $this->locked     = $data['locked'];
+        $this->personId   = $data['personId'];
+        $this->roles      = $data['roles'];
+        $this->registered = $data['registered'];
+    }
     public static function create(array $data) : User
     {
         $user = new self();
-
-        $user->name       = $data['name'];
-        $user->username   = $data['username'];
-        $user->email      = $data['email'];
-        $user->salt       = $data['salt'];
-        $user->password   = $data['password'];
-        $user->enabled    = $data['enabled'];
-        $user->locked     = $data['locked'];
-        $user->personId   = $data['personId'];
-        $user->roles      = $data['roles'];
-        $user->registered = $data['registered'];
-
+        $user->init($data);
         return $user;
     }
 }

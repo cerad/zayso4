@@ -8,6 +8,15 @@ parameters:
 doctrine:
     dbal:
         connections:
+            ayso:
+                driver: 'pdo_mysql'
+                server_version: '5.7'
+                charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+                wrapper_class: App\Ayso\AysoConnection
+                url: '%env(DATABASE_URL_AYSO)%'
             user:
                 driver: 'pdo_mysql'
                 server_version: '5.7'

@@ -1,0 +1,14 @@
+# Ayso
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Ayso\:
+        resource: './*'
+        exclude:  './{AysoConnection.php}'
+
+    App\Ayso\AysoConnection: '@doctrine.dbal.ayso_connection'
