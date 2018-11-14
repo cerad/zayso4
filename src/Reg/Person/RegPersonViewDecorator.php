@@ -7,12 +7,27 @@ use App\Reg\Person\Transformer\PhoneTransformer;
 use App\Reg\Person\Transformer\WillRefereeTransformer;
 
 /**
+ * todo Lots of id vs key cleanup still needed
+ *
  * @property-read string $name
  * @property-read string $email
  * @property-read string $phone
  * @property-read string $willRefereeBadge
  * @property-read string $willCoach
  * @property-read string $willVolunteer
+ *
+ * @property-read string $regYear
+ * @property-read string $fedId
+ * @property-read string $orgId
+ * @property-read string $orgIdClass
+ *
+ * @property-read string $availWed
+ * @property-read string $availThu
+ * @property-read string $availFri
+ * @property-read string $availSatMorn
+ * @property-read string $availSatAfter
+ * @property-read string $availSunMorn
+ * @property-read string $availSunAfter
  */
 class RegPersonViewDecorator
 {
@@ -76,7 +91,7 @@ class RegPersonViewDecorator
     }
     public function getOrgKeyClass()
     {
-        $sar = $this->orgKey;
+        $sar = $this->orgId;
         return ($sar && substr($sar,0,1) !== 'A') ? $this->successClass : $this->dangerClass;
     }
     public function getOrgKeyStyle()
@@ -155,12 +170,15 @@ class RegPersonViewDecorator
                 return $this->phoneTransformer->transform($person->phone);
             
             case 'fedId':
-            case 'fedKey': 
-                return $this->fedKeyTransformer->transform($person->fedKey);
+                return $this->fedKeyTransformer->transform($person->fedId);
             
             case 'sar':
-            case 'orgKey': 
-                return $this->orgKeyTransformer->transform($person->orgKey);
+            case 'orgId':
+                return $this->orgKeyTransformer->transform($person->orgId);
+
+            case 'orgIdClass':
+                $sar = $this->orgId;
+                return ($sar && substr($sar,0,1) !== 'A') ? $this->successClass : $this->dangerClass;
 
             case 'personKey':
                 return $person->personKey;

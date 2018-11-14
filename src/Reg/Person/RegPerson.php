@@ -178,20 +178,7 @@ class RegPerson
             case 'refereeBadgeUser':
                 return isset($this->roles['CERT_REFEREE']) ? $this->roles['CERT_REFEREE']->badgeUser : null;
         }
+        return null;
     }
 
-            /**
-     * @param  array $data
-     * @return RegPerson
-     */
-    static public function createFromArray($data)
-    {
-        $item = new self();
-
-        $item->loadFromArray($data);
-        
-        $item->avail = isset($data['avail']) ? unserialize($data['avail']) : [];
-        
-        return $item;
-    }
 }

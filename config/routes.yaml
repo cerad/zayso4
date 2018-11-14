@@ -12,6 +12,9 @@ app_home:
         _role: ROLE_USER
         _controller: App\Home\HomeAction
 
+app_detailed_instructions:
+    path: /detailed-instructions
+
 app_admin:
     path: /admin
     controller: App\Admin\AdminAction
@@ -34,4 +37,4 @@ app_results:
 
 app_reg_person:
     resource: "../src/Reg/Person/routes.yaml"
-    prefix: /reg-person
+    prefix: /reg/person

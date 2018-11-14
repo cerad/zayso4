@@ -13,6 +13,8 @@ class NG2019Project extends Project
 
     public $version = '2018-11-08';
 
+    public $regYear = 'MY2015';
+
     public $welcomeMessage = 'Welcome to the AYSO National Games 2019';
 
     protected $pageTemplateClass    = 'App\\Project\\NG2019\\PageTemplate';

@@ -10,6 +10,7 @@ use Psr\Container\ContainerInterface;
  * @property-read string $slug
  * @property-read string $title
  * @property-read string $version
+ * @property-read string $regYear
  *
  * @property-read PageTemplate     $pageTemplate
  * @property-read HomeTemplate     $homeTemplate
@@ -26,6 +27,8 @@ abstract class Project
     public $id;
     public $slug;
     public $title;
+
+    public $regYear;
 
     // Contacts
     public $support;

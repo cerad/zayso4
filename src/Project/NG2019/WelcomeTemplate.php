@@ -2,7 +2,9 @@
 
 namespace App\Project\NG2019;
 
-class WelcomeTemplate extends \App\Project\WelcomeTemplate
+use App\Project\AbstractWelcomeTemplate;
+
+class WelcomeTemplate extends AbstractWelcomeTemplate
 {
     protected function renderNotes() : string
     {

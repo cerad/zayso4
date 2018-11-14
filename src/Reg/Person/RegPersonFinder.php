@@ -53,6 +53,9 @@ EOT;
         if (!$row) {
             return null;
         }
+        $row['avail'] = unserialize($row['avail']);
+        $row['plans'] = unserialize($row['plans']);
+
         $row['roles'] = [];
         $sql = <<<EOT
 SELECT

@@ -2,7 +2,9 @@
 
 namespace App\Project\NG2019;
 
-class PageTemplate extends \App\Project\PageTemplate
+use App\Project\AbstractPageTemplate;
+
+class PageTemplate extends AbstractPageTemplate
 {
     protected $showHeaderImage  = false;
     protected $showResultsMenu  = true;

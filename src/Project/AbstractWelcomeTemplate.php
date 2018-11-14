@@ -5,7 +5,7 @@ namespace App\Project;
 use App\Core\EscapeTrait;
 use App\Core\RouterTrait;
 
-abstract class WelcomeTemplate
+abstract class AbstractWelcomeTemplate
 {
     use EscapeTrait;
     use RouterTrait;
@@ -28,10 +28,8 @@ abstract class WelcomeTemplate
 EOT;
         return $content;
     }
-    protected function renderNotes() : string
-    {
-        return 'notes';
-    }
+    abstract protected function renderNotes() : string;
+
     protected function renderUser($loginForm) : string
     {
         return <<<EOD
