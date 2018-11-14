@@ -19,7 +19,7 @@ class RegPersonFinder
         $this->regTeamConn   = $regTeamConn;
         $this->regPersonConn = $regPersonConn;
     }
-    public function findByProjectPerson(string $projectId, string $personId) : ?RegPerson
+    public function findRegPerson(string $projectId, string $personId) : ?RegPerson
     {
         $sql = <<<EOT
 SELECT
@@ -82,11 +82,12 @@ EOT;
      * projectPersonId is an autoincrement
      * This will be cleaner once the ids have been fixed up
      *
-     * @param  $regPersonId string
+     * @param  $projectId string
+     * @param  $personId string
      * @return RegPersonPerson[]
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function findRegPersonPersons($regPersonId)
+    public function findRegPersonPersons(string $projectId, string $personId)
     {
         // Get the primary information, avoid having to make an actual primary entry for now
         $sql = <<<EOD
@@ -98,37 +99,32 @@ SELECT
 FROM  projectPersons
 WHERE projectKey = ? AND personKey = ?
 EOD;
-        list($projectId,$phyPersonId) = explode(':',$regPersonId);
-        $stmt = $this->regPersonConn->executeQuery($sql,[$projectId,$phyPersonId]);
+        $stmt = $this->regPersonConn->executeQuery($sql,[$projectId,$personId]);
         $primaryRow = $stmt->fetch();
         if (!$primaryRow) {
             return [];
         }
-        $regPersonPersons[] = RegPersonPerson::createFromArray([
+        // A person is always a member of their own crew
+        $regPersonPersons[] = RegPersonPerson::create([
             'role'        => 'Primary',
-            'managerId'   => $regPersonId,
+            'projectId'   => $projectId,
+            'managerId'   => $personId,
             'managerName' => $primaryRow['name'],
-            'memberId'    => $regPersonId,
+            'memberId'    => $personId,
             'memberName'  => $primaryRow['name'],
         ]);
 
         // Now pull the crew
+        $managerId = $projectId . ':' . $personId; // Hack
         $sql = 'SELECT * FROM regPersonPersons WHERE managerId = ? ORDER BY role,memberName';
-        $stmt = $this->regPersonConn->executeQuery($sql,[$regPersonId]);
+        $stmt = $this->regPersonConn->executeQuery($sql,[$managerId]);
         while($row = $stmt->fetch()) {
-            $regPersonPersons[] = RegPersonPerson::createFromArray($row);
+            $row['projectId'] = $projectId;
+            $row['managerId'] = $personId;
+            $row['memberId'] = explode(':',$row['memberId'])[1]; // Ultra hack
+            $regPersonPersons[] = RegPersonPerson::create($row);
         }
         return $regPersonPersons;
-    }
-    public function findRegPersonPersonIds($regPersonId)
-    {
-        $sql = 'SELECT memberId FROM regPersonPersons WHERE managerId = ?';
-        $stmt = $this->regPersonConn->executeQuery($sql,[$regPersonId]);
-        $regPersonPersonIds[$regPersonId] = $regPersonId;
-        while($row = $stmt->fetch()) {
-            $regPersonPersonIds[$row['memberId']] = $row['memberId'];
-        }
-        return $regPersonPersonIds;
     }
     /** ==========================================
      * Teams associated with RegPerson
@@ -137,13 +133,17 @@ EOD;
      * @return RegPersonTeam[]
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function findRegPersonTeams($regPersonId)
+    public function findRegPersonTeams(string $projectId, string $personId)
     {
+        $managerId = $projectId . ':' . $personId; // Hack
         $sql = 'SELECT * FROM regPersonTeams WHERE managerId = ? ORDER BY role,teamId';
-        $stmt = $this->regPersonConn->executeQuery($sql,[$regPersonId]);
+        $stmt = $this->regPersonConn->executeQuery($sql,[$managerId]);
         $regPersonTeams = [];
         while($row = $stmt->fetch()) {
-            $regPersonTeams[] = RegPersonTeam::createFromArray($row);
+            $row['projectId'] = $projectId;
+            $row['managerId'] = $personId;
+            $row['teamId']    = explode(':',$row['teamId'])[1]; // Ultra hack
+            $regPersonTeams[] = RegPersonTeam::create($row);
         }
         return $regPersonTeams;
     }

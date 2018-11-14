@@ -3,10 +3,10 @@
 namespace App\Project;
 
 use App\Core\AuthenticationTrait;
-use App\Core\AuthorizationTrait;
 use App\Core\EscapeTrait;
 use App\Core\RouterTrait;
 use App\Reg\Person\RegPerson;
+use App\Reg\Person\RegPersonFinder;
 use App\Reg\Person\RegPersonViewDecorator;
 
 abstract class HomeTemplate
@@ -15,18 +15,25 @@ abstract class HomeTemplate
     use RouterTrait;
     use AuthenticationTrait;
 
-    protected $project;
-    protected $personView;
+    //protected $project;
+    /** @var RegPerson */
+    protected $regPerson;
+    protected $regPersonView;
+    protected $regPersonFinder;
 
-    public function __construct(Project $project, RegPersonViewDecorator $personView)
+    public function __construct(
+        //Project $project,
+        RegPersonFinder $regPersonFinder,
+        RegPersonViewDecorator $regPersonView)
     {
-        $this->project    = $project;
-        $this->personView = $personView;
+        //$this->project         = $project;
+        $this->regPersonView   = $regPersonView;
+        $this->regPersonFinder = $regPersonFinder;
     }
     public function render(RegPerson $regPerson) : string
     {
-        //dump($regPerson);
-        $this->personView->setRegPerson($regPerson);
+        $this->regPerson = $regPerson;
+        $this->regPersonView->setRegPerson($regPerson);
 
         return <<<EOT
 {$this->renderNotes()}<br />
@@ -38,27 +45,74 @@ abstract class HomeTemplate
 </div>
 EOT;
     }
-    protected function renderCrewInformation()
+    protected function renderCrewInformation() : string
     {
-        return '<div>Crew</div><br />';
+        $regPersonPersons = $this->regPersonFinder->findRegPersonPersons(
+            $this->regPerson->projectId,
+            $this->regPerson->personId);
+
+        //dump($regPersonPersons);
+
+        $html = <<<EOD
+<table class="tableClass" >
+  <tr><th colspan="2" style="text-align: center;">My Crew</th></tr>
+EOD;
+        foreach ($regPersonPersons as $regPersonPerson) {
+            $html .= <<<EOD
+<tr><td>{$regPersonPerson->role}</td><td>{$this->escape($regPersonPerson->memberName)}</td></tr>
+EOD;
+        }
+        $html .= <<<EOD
+<tr class="trAction"><td style="text-align: center;" colspan="2">
+  <a href="{$this->generateUrl('reg_person_persons_update')}">
+    Add/Remove People
+  </a>
+</td></tr>
+</table>
+EOD;
+
+        return $html;
     }
-    protected function renderTeamInformation()
+    protected function renderTeamInformation() : string
     {
-        return '<div>Team</div><br />';
+        $regPersonTeams = $this->regPersonFinder->findRegPersonTeams(
+            $this->regPerson->projectId,
+            $this->regPerson->personId);
+        //dump($regPersonTeams);
+
+        $html = <<<EOD
+<table class="tableClass" >
+  <tr><th colspan="2" style="text-align: center;">My Teams</th></tr>
+EOD;
+
+        foreach($regPersonTeams as $regPersonTeam) {
+            $html .= <<<EOD
+  <tr><td>{$regPersonTeam->role}</td><td>{$regPersonTeam->teamName}</td></tr>
+EOD;
+        }
+        $html .= <<<EOD
+  <tr class="trAction"><td style="text-align: center;" colspan="2">
+    <a href="{$this->generateUrl('reg_person_teams_update')}">
+        Add/Remove Teams
+    </a>
+  </td></tr>
+</table>
+EOD;
+        return $html;
     }
     protected function renderRegistration()
     {
-        $personView = $this->personView;
+        $regPersonView = $this->regPersonView;
 
         return <<<EOD
 <table class="tableClass">
   <tr><th colspan="2" style="text-align: center;">Registration Information</th></tr>
-  <tr><td>Registration Name </td><td>{$this->escape($personView->name) }</td></tr>
-  <tr><td>Registration Email</td><td>{$this->escape($personView->email)}</td></tr>
-  <tr><td>Registration Phone</td><td>{$this->escape($personView->phone)}</td></tr>
-  <tr><td>Will Referee  </td><td>{$personView->willRefereeBadge}</td></tr>
-  <tr><td>Will Volunteer</td><td>{$personView->willVolunteer}   </td></tr>
-  <tr><td>Will Coach    </td><td>{$personView->willCoach}       </td></tr>
+  <tr><td>Registration Name </td><td>{$this->escape($regPersonView->name) }</td></tr>
+  <tr><td>Registration Email</td><td>{$this->escape($regPersonView->email)}</td></tr>
+  <tr><td>Registration Phone</td><td>{$this->escape($regPersonView->phone)}</td></tr>
+  <tr><td>Will Referee  </td><td>{$regPersonView->willRefereeBadge}</td></tr>
+  <tr><td>Will Volunteer</td><td>{$regPersonView->willVolunteer}   </td></tr>
+  <tr><td>Will Coach    </td><td>{$regPersonView->willCoach}       </td></tr>
   <tr class="trAction"><td class="text-center" colspan="2">
     <a href="{$this->generateUrl('reg_person_update')}">
         Update My Plans or Availability

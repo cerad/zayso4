@@ -2,6 +2,7 @@
 
 namespace App\Project;
 
+use App\Core\ContainerTrait;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -20,6 +21,8 @@ use Psr\Container\ContainerInterface;
  */
 abstract class Project
 {
+    use ContainerTrait;
+
     public $id;
     public $slug;
     public $title;
@@ -39,12 +42,6 @@ abstract class Project
     protected $homeTemplateClass;
     protected $welcomeTemplateClass;
 
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container    = $container;
-    }
     public function __get($name)
     {
         switch ($name) {

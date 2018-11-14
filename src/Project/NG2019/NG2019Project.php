@@ -4,7 +4,6 @@ namespace App\Project\NG2019;
 
 use App\Project\Project;
 use App\Project\ProjectContact;
-use Psr\Container\ContainerInterface;
 
 class NG2019Project extends Project
 {
@@ -20,10 +19,8 @@ class NG2019Project extends Project
     protected $homeTemplateClass    = 'App\\Project\\NG2019\\HomeTemplate';
     protected $welcomeTemplateClass = 'App\\Project\\NG2019\\WelcomeTemplate';
 
-    public function __construct(ContainerInterface $container)
+    public function __construct()
     {
-        parent::__construct($container);
-
         $this->support = new ProjectContact('Art Hundiak','ahundiak@gmail.com','256-457-5943','NG2019 zAYSO question...');
         $this->system  = new ProjectContact('Zayso Admin','noreply@zayso.org','');
 

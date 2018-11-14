@@ -27,7 +27,7 @@ class HomeAction implements ActionInterface
     {
         $user = $this->getUser();
 
-        $regPerson = $this->regPersonFinder->findByProjectPerson($this->project->id,$user->personId);
+        $regPerson = $this->regPersonFinder->findRegPerson($this->project->id,$user->personId);
 
         $homeTemplate = $this->project->homeTemplate;
         $pageTemplate = $this->project->pageTemplate;

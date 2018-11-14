@@ -16,9 +16,8 @@ tournaments by adding a new directory.  Ideally there should be no other changed
 Env variable CURRENT_PROJECT picks the project.
 Typehinting against Project will inject the current project.
 
-Had to jump through some serious hoops to inject router and auth checker into project template.
-Need to go back and make them services.
-Possibly tag them as projects and a service locator into ProjectFactory
+ProjectFactory uses the container as a service locator as does the individual projects.
+Take a look at using an actual service locator later to restrict access.
 
 config/packages/parameters.yaml includes secret parameters not suitable for env files.
 might eventually just move all env stuff to it.
@@ -27,4 +26,11 @@ Use webpack instead of gulp for asset management?
 Sticking with gulp for now.  But moved assets into same directory used by encore.
 Still need to deal with tournament specific images.
 
+Ongoing issues with unique ids for various entities.
+Many entities are unique within a project and have a composite id of projectId:whateverId.
+But it does get confusing and have various places in code the explodes the id.  Very hackish.
+For now trying to have an actual projectId property in conjunction with the whateverId.
+
+Also want to look at having actual ProjectId types so they can be typehinted against.
+But it might more trouble than it's worth at least until php directly supports typed properties.
 

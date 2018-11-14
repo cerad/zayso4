@@ -6,6 +6,14 @@ use App\Ayso\Transformer\VolunteerKeyTransformer;
 use App\Reg\Person\Transformer\PhoneTransformer;
 use App\Reg\Person\Transformer\WillRefereeTransformer;
 
+/**
+ * @property-read string $name
+ * @property-read string $email
+ * @property-read string $phone
+ * @property-read string $willRefereeBadge
+ * @property-read string $willCoach
+ * @property-read string $willVolunteer
+ */
 class RegPersonViewDecorator
 {
     /** @var  RegPerson */
