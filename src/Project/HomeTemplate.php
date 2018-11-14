@@ -25,7 +25,7 @@ abstract class HomeTemplate
     }
     public function render(RegPerson $regPerson) : string
     {
-        dump($regPerson);
+        //dump($regPerson);
         $this->personView->setRegPerson($regPerson);
 
         return <<<EOT
