@@ -55,14 +55,14 @@ const nodeModulesTask = function() {
     //        path.join(nodeModulesDir,'bootstrap-fileinput/css/fileinput.min.css')            
             path.join(nodeModulesDir,'bootstrap-vertical-tabs/bootstrap.vertical-tabs.min.css')            
         ])
-        .pipe(gulp.dest('web/css'));
+        .pipe(gulp.dest('public/css'));
     //
     //gulp.src([
     //        path.join(nodeModulesDir,'jquery/dist/jquery.min.js'),
     //        path.join(nodeModulesDir,'bootstrap/dist/js/bootstrap.min.js'),
     //        path.join(nodeModulesDir,'bootstrap-fileinput/js/fileinput.min.js')
     //    ])
-    //    .pipe(gulp.dest('web/js'));
+    //    .pipe(gulp.dest('public/js'));
 };
 gulp.task('node_modules',nodeModulesTask);
 

@@ -19,5 +19,5 @@
 /config/packages/parameters.yaml
 
 /node_modules/
-/public/css/zayso.css
-/public/js/zayso.js
+/public/css/
+/public/js/
