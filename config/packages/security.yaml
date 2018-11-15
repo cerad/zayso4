@@ -14,8 +14,10 @@ security:
             security: false
 
         main:
-            anonymous: true
-            switch_user: true
+            pattern:      ^/
+            anonymous:    true
+            switch_user:  true
+            user_checker: App\User\UserChecker
 
             logout:
                 path:   user_logout
@@ -23,6 +25,7 @@ security:
 
             form_login:
                 provider:            user_provider
+
                 login_path:          user_login
                 check_path:          user_login_check
                 default_target_path: app_home

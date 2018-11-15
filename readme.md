@@ -18,6 +18,7 @@ Typehinting against Project will inject the current project.
 
 ProjectFactory uses the container as a service locator as does the individual projects.
 Take a look at using an actual service locator later to restrict access.
+ProjectFactory should probable be named to ProjectLocator.
 
 config/packages/parameters.yaml includes secret parameters not suitable for env files.
 might eventually just move all env stuff to it.
@@ -34,3 +35,5 @@ For now trying to have an actual projectId property in conjunction with the what
 Also want to look at having actual ProjectId types so they can be typehinted against.
 But it might more trouble than it's worth at least until php directly supports typed properties.
 
+The user password encoder now uses then latest argon2 hasher.
+Legacy password hashes are automatically updated when the user logs in.

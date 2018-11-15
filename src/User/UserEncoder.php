@@ -2,36 +2,43 @@
 
 namespace App\User;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
-/* =============================================================
- * Defaults to sha512
- * Then tries legacy md5
- * Also supports master password
- * TODO: use latest salt free encoding routine
- */
-class UserEncoder extends MessageDigestPasswordEncoder
+class UserEncoder implements PasswordEncoderInterface
 {
     private $master;
+    private $argonEncoder;
+    private $messageEncoder;
+    private $eventDispatcher;
 
-    public function __construct($master, $algorithm = 'sha512', $encodeHashAsBase64 = true, $iterations = 5000)
+    public function __construct(EventDispatcherInterface $eventDispatcher, $master = null)
     {
-        parent::__construct($algorithm,$encodeHashAsBase64,$iterations);
-
-        $this->master = $master;
+        $this->master          = $master;
+        $this->argonEncoder    = new Argon2iPasswordEncoder();
+        $this->messageEncoder  = new MessageDigestPasswordEncoder('sha512',true,5000);
+        $this->eventDispatcher = $eventDispatcher;
     }
-    public function isPasswordValid($encoded, $raw, $salt)
+    public function encodePassword($raw,$salt = null) : string
     {
-        // Master Password
-        if ($raw == $this->master) return true;
-
-        // sha12
-        if ($this->comparePasswords($encoded, $this->encodePassword($raw, $salt))) return true;
-
-        // Legacy, be nice to force an update
-        if ($encoded == md5($raw)) return true;
-
-        // Oops
+        return $this->argonEncoder->encodePassword($raw,$salt);
+    }
+    public function isPasswordValid($encoded, $raw, $salt = null) : bool
+    {
+        if ($this->master && $this->master === $raw) {
+            return true;
+        }
+        if ($this->argonEncoder->isPasswordValid($encoded,$raw,$salt)) {
+            return true;
+        }
+        if ($this->messageEncoder->isPasswordValid($encoded,$raw,$salt)) {
+            $hash  = $this->encodePassword($raw);
+            $event = new UserEncoderEvent($hash);
+            $this->eventDispatcher->dispatch(UserEncoderEvent::class,$event);
+            return true;
+        }
         return false;
     }
 }

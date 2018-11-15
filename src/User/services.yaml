@@ -14,7 +14,7 @@ services:
     App\User\UserConnection: '@doctrine.dbal.user_connection'
 
     App\User\UserEncoder:
-      $master: '%env(USER_MASTER_PASSWORD)%'
+        $master: '%env(USER_MASTER_PASSWORD)%'
 
     App\User\Authen\ProviderFactory:
         $providers: '%user_authen_providers%'
