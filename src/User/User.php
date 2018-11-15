@@ -92,7 +92,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
         if ($this->username !== $user->getUsername()) {
             return false;
         }
-        if (substr($this->password, 0, strlen('$argon2$')) !== '$argon2$') {
+        if (substr($this->password, 0, strlen('$argon2i$')) !== '$argon2i$') {
             return true; // Just rehashed
         }
         if ($this->password !== $user->getPassword()) {

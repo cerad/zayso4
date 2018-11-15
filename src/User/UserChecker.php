@@ -3,10 +3,10 @@
 namespace App\User;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserChecker as UserCheckerBase;
 
-class UserChecker implements UserCheckerInterface,EventSubscriberInterface
+class UserChecker extends UserCheckerBase implements EventSubscriberInterface
 {
     private $hash; // Newly generated hash
 
@@ -26,12 +26,10 @@ class UserChecker implements UserCheckerInterface,EventSubscriberInterface
     {
         $this->hash = $event->hash;
     }
-    public function checkPreAuth(UserInterface $user)
-    {
-
-    }
     public function checkPostAuth(UserInterface $user)
     {
+        parent::checkPostAuth($user);
+
         if (!$user instanceof User) {
             return;
         }
