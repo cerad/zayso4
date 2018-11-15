@@ -12,8 +12,7 @@ user_logout:
 user_create:
     path: /create
     defaults:
-        _view:       user_create_view
-        _controller: user_create_controller
+        _controller: App\User\Create\UserCreateAction
 
 user_update:
     path: /update
