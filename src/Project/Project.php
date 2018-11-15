@@ -3,7 +3,6 @@
 namespace App\Project;
 
 use App\Core\ContainerTrait;
-use Psr\Container\ContainerInterface;
 
 /**
  * @property-read string $id
@@ -12,9 +11,9 @@ use Psr\Container\ContainerInterface;
  * @property-read string $version
  * @property-read string $regYear
  *
- * @property-read PageTemplate     $pageTemplate
- * @property-read HomeTemplate     $homeTemplate
- * @property-read WelcomeTemplate  $welcomeTemplate
+ * @property-read AbstractPageTemplate     $pageTemplate
+ * @property-read AbstractHomeTemplate     $homeTemplate
+ * @property-read AbstractWelcomeTemplate  $welcomeTemplate
  *
  * @property-read ProjectContact $support
  *

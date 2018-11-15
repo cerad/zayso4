@@ -2,6 +2,7 @@
 
 namespace App\User;
 
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @property-read string $personId
  * @property-read array  $roles
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, EquatableInterface
 {
     private $id;
 
@@ -64,9 +65,8 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,         // For refreshing
-            $this->salt,
+            $this->username,
             $this->password,
-            $this->username,   // Debugging
         ));
     }
     public function unserialize($serialized)
@@ -75,25 +75,30 @@ class User implements UserInterface, \Serializable
 
         list(
             $this->id,
-            $this->salt,
-            $this->password,
-            $this->username
-            ) = $data;
+            $this->username,
+            $this->password) = $data;
 
         return;
     }
-    // Try to make these go away
-    //public function getProjectId()
-    //{
-    //    return $this->projectId;
-    //}
-    public function getPersonId()
+    public function isEqualTo(UserInterface $user) : bool
     {
-        return $this->personId;
-    }
-    public function getPersonName()
-    {
-        return $this->name;
+        /* for reasons that I am not clear on,
+         * isEqualTo is called during initial login
+         * If the hash was changed then this will fail
+         *
+         * To check for password hash type changes, look for argon hash
+         */
+        // dump($this); dd($user);
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+        if (substr($this->password, 0, strlen('$argon2$')) !== '$argon2$') {
+            return true; // Just rehashed
+        }
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+        return true;
     }
     private function init(array $data) : void
     {

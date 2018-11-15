@@ -237,7 +237,7 @@ EOT;
     }
     protected function renderSignOut()
     {
-        $userName = $this->escape($this->getUser()->getPersonName());
+        $userName = $this->escape($this->getUser()->name);
         $userUrl  = $this->generateUrl('user_logout');
         if ($this->isGranted('ROLE_ADMIN')){
             $userLabel = 'SIGN OUT ' . $userName;
