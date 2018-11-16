@@ -2,21 +2,16 @@
 
 namespace App\Project;
 
-use App\Core\ContainerTrait;
-use Psr\Container\ContainerInterface;
-
 class ProjectFactory
 {
-    use ContainerTrait;
+    private $projectLocator;
 
-    public function __construct()
+    public function __construct(ProjectLocator $projectLocator)
     {
-        //$this->container = $container;
+        $this->projectLocator = $projectLocator;
     }
     public function create(string $projectClass) : Project
     {
-        return $this->container->get($projectClass);
-
-        //throw new \InvalidArgumentException('ProjectFactory::create ' . $projectClass);
+        return $this->projectLocator->get($projectClass);
     }
 }

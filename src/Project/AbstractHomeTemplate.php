@@ -9,7 +9,7 @@ use App\Reg\Person\RegPerson;
 use App\Reg\Person\RegPersonFinder;
 use App\Reg\Person\RegPersonViewDecorator;
 
-abstract class AbstractHomeTemplate
+abstract class AbstractHomeTemplate implements ProjectTemplateInterface
 {
     use EscapeTrait;
     use RouterTrait;

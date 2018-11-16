@@ -2,8 +2,6 @@
 
 namespace App\Project;
 
-use App\Core\ContainerTrait;
-
 /**
  * @property-read string $id
  * @property-read string $slug
@@ -22,9 +20,9 @@ use App\Core\ContainerTrait;
  *  @property-read array $formControls
  *  @property-read array $regPersonFormControls
  */
-abstract class Project
+abstract class Project implements ProjectInterface
 {
-    use ContainerTrait;
+    protected $projectLocator;
 
     public $id;
     public $slug;
@@ -50,18 +48,28 @@ abstract class Project
     public $formControls = [];
     public $regPersonFormControls = [];
 
+    public function __construct(ProjectLocator $projectLocator)
+    {
+        $this->projectLocator = $projectLocator;
+
+        $this->initFormControls();
+        $this->initRegPersonFormControls();
+
+    }
+    abstract protected function initRegPersonFormControls() : void;
+
     public function __get($name)
     {
         switch ($name) {
 
             case 'pageTemplate':
-                return $this->container->get($this->pageTemplateClass);
+                return $this->projectLocator->get($this->pageTemplateClass);
 
             case 'homeTemplate':
-                return $this->container->get($this->homeTemplateClass);
+                return $this->projectLocator->get($this->homeTemplateClass);
 
             case 'welcomeTemplate':
-                return $this->container->get($this->welcomeTemplateClass);
+                return $this->projectLocator->get($this->welcomeTemplateClass);
         }
         return null;
     }

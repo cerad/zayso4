@@ -16,3 +16,4 @@ So refactored to define projects as services and pull them directly from the con
 Projects have to be defined as public and of course global containers are discouraged.
 Later on see about replacing the container with a more focused service locator.
 
+Figured out how to make a ProjectLocator which provides access to ProjectInterface and ProjectTemplateInterface services.

@@ -5,7 +5,7 @@ namespace App\Project;
 use App\Core\EscapeTrait;
 use App\Core\RouterTrait;
 
-abstract class AbstractWelcomeTemplate
+abstract class AbstractWelcomeTemplate implements ProjectTemplateInterface
 {
     use EscapeTrait;
     use RouterTrait;

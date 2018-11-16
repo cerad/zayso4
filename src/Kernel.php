@@ -3,14 +3,21 @@
 namespace App;
 
 use App\Core\ActionInterface;
+use App\Project\ProjectLocator;
+use App\Project\ProjectInterface;
+use App\Project\ProjectTemplateInterface;
+
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
-class Kernel extends BaseKernel
+class Kernel extends BaseKernel implements CompilerPassInterface
 {
     use MicroKernelTrait;
 
@@ -63,7 +70,26 @@ class Kernel extends BaseKernel
     protected function build(ContainerBuilder $container)
     {
         $container->registerForAutoconfiguration(ActionInterface::class)
-            ->addTag('controller.service_arguments')
-        ;
+            ->addTag('controller.service_arguments');
+        $container->registerForAutoconfiguration(ProjectInterface::class)
+            ->addTag('project.base');
+        $container->registerForAutoconfiguration(ProjectTemplateInterface::class)
+            ->addTag('project.template');
+        $container->registerForAutoconfiguration(DataTransformerInterface::class)
+            ->addTag('project.transformer');
+    }
+    public function process(ContainerBuilder $container)
+    {
+        // Trial and error a wonderful thing
+        $projectLocator = $container->getDefinition(ProjectLocator::class);
+        $projectLocatorIds = [];
+        foreach ($container->findTaggedServiceIds('project.base') as $id => $tags) {
+            $projectLocatorIds[$id] = new Reference($id);
+        }
+        foreach ($container->findTaggedServiceIds('project.template') as $id => $tags) {
+            $projectLocatorIds[$id] = new Reference($id);
+        }
+        $projectLocator->setArguments([$projectLocatorIds]);
+
     }
 }

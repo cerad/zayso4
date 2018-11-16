@@ -6,7 +6,7 @@ use App\Core\EscapeTrait;
 use App\Core\RouterTrait;
 use App\Core\SecurityTrait;
 
-abstract class AbstractPageTemplate
+abstract class AbstractPageTemplate implements ProjectTemplateInterface
 {
     use EscapeTrait;
     use RouterTrait;
