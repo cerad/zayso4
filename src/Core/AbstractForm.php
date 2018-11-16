@@ -90,7 +90,7 @@ EOD;
      * Your basic select input element
      *
      */
-    protected function renderInputSelect($choices,$value,$name,$id=null,$size=null,$class="form-control")
+    protected function renderInputSelect($choices,$value,$name,$id=null,$size=null,$class="form-control") : string
     {
         $id = $id ? : $name;
 
@@ -110,11 +110,10 @@ EOD;
             $choiceContent = $this->escape($choiceContent);
             $html .= <<<EOD
   <option value="{$choiceValue}" {$selected}>{$choiceContent}</option>
-
 EOD;
         }
         $html .= <<<EOD
-<select>
+</select>
 EOD;
         return $html;
     }
@@ -148,6 +147,10 @@ EOD;
 EOD;
         return $html;
     }
+    /* ================================================================
+     * Assorted filters
+     *
+     */
     protected function filterString(array $data,string $name) : ?string
     {
         $itemData = isset($data[$name]) ? $data[$name] : null;
@@ -166,7 +169,7 @@ EOD;
         }
         return $itemData;
     }
-    protected function filterScalarInteger($data,$name)
+    protected function filterInteger($data,$name)
     {
         $itemData = isset($data[$name]) ? $data[$name] : null;
         $itemData = filter_var(trim($itemData), FILTER_SANITIZE_NUMBER_INT );

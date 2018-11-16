@@ -36,5 +36,35 @@ class NG2019Project extends Project
 
         $this->administrator = $this->scheduler->withSubject('NG2019 Referee Administrator');
 
+        $this->initFormControls();
+        $this->initRegPersonFormControls();
+    }
+    protected function initRegPersonFormControls() : void
+    {
+        $this->regPersonFormControls = [
+
+            'regName'  => [],
+            'regEmail' => [],
+            'regPhone' => [],
+
+            'fedId'         => ['map' => 'fedIdAYSO'],
+            'orgId'         => ['map' => 'orgIdAYSO'],
+            'refereeBadge'  => ['map' => 'refereeBadgeAYSO'],
+
+            'willReferee'   => ['group' => 'plans'],
+            'willCoach'     => ['group' => 'plans'],
+            'willVolunteer' => ['group' => 'plans'],
+            'shirtSize'     => [],
+
+            'availWed'      => ['group' => 'avail'],
+            'availThu'      => ['group' => 'avail'],
+            'availFri'      => ['group' => 'avail'],
+            'availSatMorn'  => ['group' => 'avail'],
+            'availSatAfter' => ['group' => 'avail'],
+            'availSunMorn'  => ['group' => 'avail'],
+            'availSunAfter' => ['group' => 'avail'],
+
+            'notesUser'     => [],
+        ];
     }
 }

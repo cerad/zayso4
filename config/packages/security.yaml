@@ -38,7 +38,8 @@ security:
                 csrf_token_generator: security.csrf.token_manager
 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/home,       roles: ROLE_USER }
+        - { path: ^/reg/person, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:

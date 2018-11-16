@@ -242,9 +242,8 @@ EOT;
         if ($this->isGranted('ROLE_ADMIN')){
             $userLabel = 'SIGN OUT ' . $userName;
         } else {
-            $userLabel = 'SIGN OUT ';
+            $userLabel = 'SIGN OUT ' . $userName; // just because
         }
-
         if ($this->isGranted('ROLE_PREVIOUS_ADMIN')) {
             $userUrl = $this->generateUrl('app_admin',['_switch_user' => '_exit']);
             $userLabel = 'SU EXIT ' . $userName;
