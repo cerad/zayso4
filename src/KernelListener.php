@@ -25,7 +25,7 @@ class KernelListener implements EventSubscriberInterface
     use ContainerTrait; // For views
 
     private $env;
-    private $secureRoutes = false;
+    private $secureRoutes = true;
     
     public static function getSubscribedEvents()
     {
@@ -75,8 +75,8 @@ class KernelListener implements EventSubscriberInterface
             return;
         }
         // Make sure register is called at least once
-        $user = $this->getUser();
-        if ($user->registered !== null) {
+        $user = $this->getUser();//dd($user);
+        if ($user->registered !== false) {
             return;
         }
         // Allow this one through

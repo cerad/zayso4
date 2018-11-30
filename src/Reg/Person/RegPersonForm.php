@@ -11,11 +11,37 @@ class RegPersonForm extends AbstractForm
     private $project;
     private $formControls = [];
 
+    protected function mergeFormControls(array $master,array $controls) : array
+    {
+        $merged = [];
+        foreach($controls as $key => $meta) {
+            if (!isset($meta['type'])) {
+                $map = isset($meta['map']) ? $meta['map'] : $key;
+                $meta = \array_merge($meta,$master[$map]);
+            }
+            $merged[$key] = $meta;
+        }
+        return $merged;
+    }
+
     public function __construct(Project $project)
     {
         $this->project = $project;
-        $this->formControls = $project->mergeFormControls($project->regPersonFormControls);
+        $this->formControls = $this->mergeFormControls($project->formControls,$project->regPersonFormControls);
+
+        // This would ensure formData starts with an entry for each control
+        $formData = [];
+        foreach($this->formControls as $key => $meta) {
+
+            $group = isset($meta['group']) ? $meta['group'] : null;
+            $default = isset($meta['default']) ? $meta['default'] : null;
+            if ($group) $formData[$group][$key] = $default;
+            else        $formData[$key] = $default;
+        }
+        $formData['id'] = null;
+        $this->formData = $formData;
         dump($this->formControls);
+        dump($this->formData);
     }
 
     public function handleRequest(Request $request)
@@ -118,8 +144,8 @@ EOD;
 
         return  <<<EOD
 <input 
-  type="{$meta['type']} id="{$id}" class="form-control" {$required}
-  name="{$name}" value="{$value}" placeHolder="{$placeHolder}"} />
+  type="{$meta['type']}" id="{$id}" class="form-control" {$required}
+  name="{$name}" value="{$value}" placeHolder="{$placeHolder}" />
 EOD;
     }
     private function renderFormControlInputTextArea($meta,$value,$id,$name)
@@ -135,7 +161,7 @@ EOD;
         return  <<<EOD
 <textarea 
   id="{$id}" class="form-control" rows="{$rows}" {$required}
-  name="{$name}" placeHolder="{$placeHolder}"} >{$value}
+  name="{$name}" placeHolder="{$placeHolder}" >{$value}
 </textarea>
 EOD;
     }

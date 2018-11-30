@@ -74,6 +74,7 @@ EOT;
                 }
             }
         }
+        $userData['registered'] = false; // testing
         // And create
         $user = User::create($userData);
         return $user;

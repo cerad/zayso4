@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Core\ActionInterface;
+use App\Core\TransformerLocator;
 use App\Project\ProjectLocator;
 use App\Project\ProjectInterface;
 use App\Project\ProjectTemplateInterface;
@@ -91,5 +92,12 @@ class Kernel extends BaseKernel implements CompilerPassInterface
         }
         $projectLocator->setArguments([$projectLocatorIds]);
 
+        $transformerLocatorIds = [];
+        foreach ($container->findTaggedServiceIds('project.transformer') as $id => $tags) {
+            $transformerLocatorIds[$id] = new Reference($id);
+        }
+        $transformerLocator = $container->getDefinition(TransformerLocator::class);
+        $transformerLocator->setArguments([$transformerLocatorIds]);
+        //dump(array_keys($transformerLocatorIds));
     }
 }

@@ -12,3 +12,9 @@ services:
         exclude:  './{AysoConnection.php}'
 
     App\Ayso\AysoConnection: '@doctrine.dbal.ayso_connection'
+
+    # Just a test for manual tagging and old style service ids
+    #rts.transformer:
+    #    class: App\Ayso\RegionToSarTransformer
+    #    public: true
+    #    tags: { name: 'project.transformer'}

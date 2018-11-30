@@ -85,6 +85,7 @@ abstract class Project implements ProjectInterface
         }
         return $merged;
     }
+    // Move this to it's own class
     protected function initFormControls() : void
     {
         $this->formControls = [

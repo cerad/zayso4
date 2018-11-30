@@ -54,6 +54,7 @@ class NG2019Project extends Project
             'willReferee'   => ['group' => 'plans'],
             'willCoach'     => ['group' => 'plans'],
             'willVolunteer' => ['group' => 'plans'],
+
             'shirtSize'     => [],
 
             'availWed'      => ['group' => 'avail'],
