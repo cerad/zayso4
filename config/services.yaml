@@ -1,6 +1,5 @@
 # config/services.yaml
 parameters:
-    locale: 'en'
 
 imports:
     - { resource: '../src/Project/services.yaml' }
