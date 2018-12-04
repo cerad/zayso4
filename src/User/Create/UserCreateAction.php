@@ -8,16 +8,11 @@ use App\Project\Project;
 use App\User\User;
 use App\User\UserConnection;
 use App\User\UserEncoder;
+use App\User\UserLoginUser;
 use App\User\UserProvider;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
 
 class UserCreateAction implements ActionInterface
 {
@@ -28,27 +23,24 @@ class UserCreateAction implements ActionInterface
     private $project;
     private $userEncoder;
     private $userProvider;
+    private $userLoginUser;
     private $userCreateForm;
-    private $tokenStorage;
-    private $eventDispatcher;
 
     public function __construct(
         Project        $project,
         UserConnection $conn,
         UserProvider   $userProvider,
         UserEncoder    $userEncoder,
-        UserCreateForm $userCreateForm,
-        TokenStorageInterface    $tokenStorage,
-        EventDispatcherInterface $eventDispatcher
+        UserLoginUser  $userLoginUser,
+        UserCreateForm $userCreateForm
     )
     {
         $this->conn            = $conn;
         $this->project         = $project;
         $this->userEncoder     = $userEncoder;
         $this->userProvider    = $userProvider;
+        $this->userLoginUser   = $userLoginUser;
         $this->userCreateForm  = $userCreateForm;
-        $this->tokenStorage    = $tokenStorage;
-        $this->eventDispatcher = $eventDispatcher;
     }
     public function __invoke(Request $request)
     {
@@ -72,7 +64,7 @@ class UserCreateAction implements ActionInterface
                 $userData['password'],
                 $userData['role']
             );
-            $this->loginUser($request,$user);
+            $this->userLoginUser->loginUser($request,$user);
 
             return $this->redirectToRoute('reg_person_register');
         }
@@ -94,7 +86,7 @@ class UserCreateAction implements ActionInterface
         // Person guid
         $personId = $this->generateGuid();
 
-        // The insert - todo UserInsertor?
+        // The insert - todo UserInserter?
         $qb = $this->conn->createQueryBuilder();
         
         $qb->insert('users');
@@ -120,14 +112,7 @@ class UserCreateAction implements ActionInterface
 
         return $this->userProvider->loadUserByUsername($email);
     }
-    private function loginUser(Request $request, UserInterface $user) : void
-    {
-        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-        $this->tokenStorage->setToken($token);
-
-        $event = new InteractiveLoginEvent($request, $token);
-        $this->eventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
-    }
+    // Todo maybe move to repository or something
     private function generateUniqueUsername(string $username) : ?string
     {
         $sql = 'SELECT id FROM users WHERE username = ?';

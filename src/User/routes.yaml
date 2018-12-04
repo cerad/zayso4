@@ -24,20 +24,18 @@ user_update:
 user_password_update:
     path: /password/update
     defaults:
-        _controller: user_password_update_controller
+        _controller: user_password_update_action
 
 user_password_reset_request:
     path: /password/reset-request
     defaults:
-        _view:       user_password_reset_request_view
-        _controller: user_password_reset_request_controller
+        _controller: App\User\Password\ResetRequest\PasswordResetRequestAction
 
 user_password_reset_response:
     path: /password/reset-response/{token}
     defaults:
         token:       null
-        _view:       user_password_reset_response_view
-        _controller: user_password_reset_response_controller
+        _controller: App\User\Password\ResetResponse\PasswordResetResponseAction
 
 # user social network
 user_authen_connect:
