@@ -92,11 +92,13 @@ EOD;
 
         $message->setSubject($subject);
 
-        $message->setFrom(['noreply@zayso.org' => 'zAYSO Admin']);
+        $system = $this->project->system;
+        $message->setFrom([$system->email => $system->name]);
 
         $message->setTo([$user['email'] => $user['name']]);
 
-        $message->setBcc(['ahundiak@gmail.com' => 'Art Hundiak']);
+        $support = $this->project->support;
+        $message->setBcc([$support->email => $support->name]);
         
         $mailer->send($message);
     }

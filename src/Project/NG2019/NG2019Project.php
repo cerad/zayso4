@@ -27,7 +27,7 @@ class NG2019Project extends Project
         parent::__construct($projectLocator);
 
         $this->support = new ProjectContact('Art Hundiak','ahundiak@gmail.com','256-457-5943','NG2019 zAYSO question...');
-        $this->system  = new ProjectContact('Zayso Admin','noreply@zayso.org','');
+        $this->system  = new ProjectContact('zAYSO Admin','noreply@zayso.org','');
 
         $this->scheduler = new ProjectContact(
             'Robert McCarthy',

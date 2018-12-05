@@ -13,7 +13,12 @@ namespace App\Project;
  * @property-read AbstractHomeTemplate     $homeTemplate
  * @property-read AbstractWelcomeTemplate  $welcomeTemplate
  *
+ * Maybe have a contacts collection?
  * @property-read ProjectContact $support
+ * @property-read ProjectContact $scheduler
+ * @property-read ProjectContact $assignor
+ * @property-read ProjectContact $administrator
+ * @property-read ProjectContact $system
  *
  * @property-read string $welcomeMessage
  *
