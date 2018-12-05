@@ -23,6 +23,11 @@ trait RouterTrait
     {
         return $this->router->generate($route, $parameters, $referenceType);
     }
+    // Handy for mail templates
+    protected function generateUrlAbsoluteUrl(string $route, array $parameters = array())
+    {
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+    }
     protected function redirect($url, $status = 302) : RedirectResponse
     {
         return new RedirectResponse($url, $status);

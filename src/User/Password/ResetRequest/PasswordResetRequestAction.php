@@ -3,6 +3,7 @@
 namespace App\User\Password\ResetRequest;
 
 use App\Core\ActionInterface;
+use App\Core\MailerLocator;
 use App\Core\RouterTrait;
 use App\Project\Project;
 use App\User\Password\PasswordRepository;
@@ -16,17 +17,19 @@ class PasswordResetRequestAction implements ActionInterface
 
     private $form;
     private $project;
+    private $mailerLocator;
     private $passwordRepository;
-
 
     public function __construct(
         Project $project,
+        MailerLocator $mailerLocator,
         PasswordRepository $passwordRepository,
         PasswordResetRequestForm $form
     )
     {
         $this->form    = $form;
         $this->project = $project;
+        $this->mailerLocator  = $mailerLocator;
         $this->passwordRepository = $passwordRepository;
     }
     public function __invoke(Request $request)
@@ -45,7 +48,7 @@ class PasswordResetRequestAction implements ActionInterface
 
             $this->passwordRepository->updatePasswordToken($user['id'],$user['passwordToken']);
 
-            //$this->sendEmail($user);
+            $this->sendEmail($user);
 
             return $this->redirectToRoute('user_password_reset_response');
         }
@@ -76,9 +79,13 @@ OR click here:
 
 {$this->generateUrlAbsoluteUrl('user_password_reset_response',['token' => $token])}
 EOD;
-        $mailer  = $this->getMailer();
 
-        /** @var \Swift_Message $message */
+        $mailer = $this->mailerLocator->get();
+
+        /** @var \Swift_Message $message
+         * This is needed to prevent a warning with mailer->send
+         * Bit strange the setBody works fine
+         */
         $message = $mailer->createMessage();
 
         $message->setBody($body);
