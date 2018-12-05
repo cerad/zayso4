@@ -17,3 +17,8 @@ schedule_assignor:
 schedule_my:
     path:       /my
     controller: App\Schedule\Assignor\MyAction
+
+# Needs a bit of refinement perhaps
+schedule_medalroundcalc:
+    path:       /medalround
+    controller: App\Schedule\MedalRound

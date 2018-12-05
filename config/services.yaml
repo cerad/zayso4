@@ -26,3 +26,6 @@ services:
     App\Welcome\:
         resource: '../src/Welcome/*'
 
+    App\Admin\:
+        resource: '../src/Admin/*'
+

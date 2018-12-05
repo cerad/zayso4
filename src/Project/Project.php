@@ -8,6 +8,7 @@ namespace App\Project;
  * @property-read string $title
  * @property-read string $version
  * @property-read string $regYear
+ * @property-read string $rainedOutKey
  *
  * @property-read AbstractPageTemplate     $pageTemplate
  * @property-read AbstractHomeTemplate     $homeTemplate
@@ -22,8 +23,8 @@ namespace App\Project;
  *
  * @property-read string $welcomeMessage
  *
- *  @property-read array $formControls
- *  @property-read array $regPersonFormControls
+ * @property-read array $formControls
+ * @property-read array $regPersonFormControls
  */
 abstract class Project implements ProjectInterface
 {
@@ -34,6 +35,7 @@ abstract class Project implements ProjectInterface
     public $title;
 
     public $regYear;
+    public $rainedOutKey;
 
     // Contacts
     public $support;
@@ -113,7 +115,7 @@ abstract class Project implements ProjectInterface
                 'label'       => 'Mobile Phone',
                 'placeHolder' => 'Your Phone Number',
                 'required'    => false,
-                'transformer' => ['phone_transformer'],
+                'transformer' => 'App\Reg\Person\Transformer\PhoneTransformer',
             ],
             'willVolunteer' => [
                 'type'    => 'select',
@@ -196,7 +198,7 @@ abstract class Project implements ProjectInterface
                 'label'       => 'AYSO Volunteer ID',
                 'href'        => 'eayso.org',
                 'placeHolder' => '8 digit number',
-                'transformer' => 'ayso_volunteer_key_transformer',
+                'transformer' => 'App\Ayso\Transformer\VolunteerKeyTransformer',
                 'constraints' => ['aysoid_constraint'],
             ],
             'orgIdAYSO' => [
@@ -204,7 +206,7 @@ abstract class Project implements ProjectInterface
                 'label'       => 'AYSO Region Number',
                 'href'        => 'eayso.org',
                 'placeHolder' => '1-4 digit number',
-                'transformer' => 'ayso_region_key_transformer',
+                'transformer' => 'App\Ayso\Transformer\RegionKeyTransformer',
                 'constraints' => ['aysoid_constraint'],
             ],
             'availSatMorn' => [

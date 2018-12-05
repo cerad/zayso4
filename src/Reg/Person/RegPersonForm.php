@@ -3,12 +3,14 @@
 namespace App\Reg\Person;
 
 use App\Core\AbstractForm;
+use App\Core\TransformerLocator;
 use App\Project\Project;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegPersonForm extends AbstractForm
 {
     private $project;
+    private $transformerLocator;
     private $formControls = [];
 
     protected function mergeFormControls(array $master,array $controls) : array
@@ -24,9 +26,10 @@ class RegPersonForm extends AbstractForm
         return $merged;
     }
 
-    public function __construct(Project $project)
+    public function __construct(Project $project, TransformerLocator $transformerLocator)
     {
         $this->project = $project;
+        $this->transformerLocator = $transformerLocator;
         $this->formControls = $this->mergeFormControls($project->formControls,$project->regPersonFormControls);
 
         // This would ensure formData starts with an entry for each control
@@ -105,8 +108,8 @@ EOD;
             $value = isset($this->formData[$key]) ? $this->formData[$key] : $default;
         }
         if (isset($meta['transformer'])) {
-            //$transformer = $this->getTransformer($meta['transformer']);
-            //$value = $transformer->transform($value);
+            $transformer = $this->transformerLocator->get($meta['transformer']);
+            $value = $transformer->transform($value);
         }
         $label = isset($meta['label']) ? $this->escape($meta['label']) : null;
 

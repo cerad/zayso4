@@ -15,6 +15,9 @@ app_home:
 app_detailed_instructions:
     path: /detailed-instructions
 
+app_field_map:
+    path: /field-map
+
 app_admin:
     path: /admin
     controller: App\Admin\AdminAction
@@ -35,6 +38,14 @@ app_results:
     resource: "../src/Results/routes.yaml"
     prefix: /results
 
+app_reg_team:
+    resource: "../src/Reg/Team/routes.yaml"
+    prefix: /reg/team
+
 app_reg_person:
     resource: "../src/Reg/Person/routes.yaml"
     prefix: /reg/person
+
+app_game:
+    resource: "../src/Game/routes.yaml"
+    prefix: /game

@@ -3,6 +3,7 @@ namespace App\Reg\Person;
 
 use App\Reg\RegConnection;
 use App\User\UserConnection;
+use Doctrine\DBAL\Connection;
 
 class RegPersonFinder
 {
@@ -210,7 +211,6 @@ EOD;
     }
     /* ==========================================
      * Mainly for Switch User within a project
-     *
      */
     public function findUserChoices($projectId)
     {

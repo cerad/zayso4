@@ -5,6 +5,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ShirtSizeTransformer implements DataTransformerInterface
 {
+    // List of shirt sizes should be tied to project shirt size form control?
     private $shirtSizes = [
         'na'         =>     'na',
         'youths'     =>     'YS',

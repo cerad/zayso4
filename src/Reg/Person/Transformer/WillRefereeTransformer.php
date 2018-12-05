@@ -3,6 +3,13 @@ namespace App\Reg\Person\Transformer;
 
 use App\Reg\Person\RegPerson;
 
+/**
+ * This is actually a view transformer and not a standard data transformer
+ * probably does not belong here
+ * but okay for now I guess.
+ *
+ * Maybe rename to WillRefereeViewTransformer
+ */
 class WillRefereeTransformer
 {
     public function __invoke(RegPerson $person)

@@ -1,21 +1,22 @@
-# RegPerson
-
 reg_person_update:
-  path:       /update
-  defaults:
-      #_role: ROLE_USER
-      _controller: App\Reg\Person\Update\RegPersonUpdateAction
-
-reg_person_persons_update:
-  path:       /persons/update
-  controller: App\Reg\Person\Persons\RegPersonPersonsUpdateAction
-
-reg_person_teams_update:
-  path:       /teams/update
-  controller: App\Reg\Person\Teams\RegPersonTeamsUpdateAction
+    path: /update
+    defaults:
+        #_role: ROLE_USER
+        _controller: App\Reg\Person\Update\RegPersonUpdateAction
 
 reg_person_register:
-  path:       /register
-  defaults:
-      #_role: ROLE_USER
-      _controller: App\Reg\Person\Register\RegPersonRegisterAction
+    path: /register
+    defaults:
+        _role: ROLE_USER
+        _controller: App\Reg\Person\Register\RegPersonRegisterAction
+
+reg_person_persons_update:
+    path: /persons/update
+    controller: App\Reg\Person\Persons\RegPersonPersonsUpdateAction
+
+reg_person_teams_update:
+    path: /teams/update
+    controller: App\Reg\Person\Teams\RegPersonTeamsUpdateAction
+
+reg_person_admin_listing:
+    path: /admin/listing

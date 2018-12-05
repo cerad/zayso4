@@ -79,6 +79,7 @@ class KernelListener implements EventSubscriberInterface
         if ($user->registered !== false) {
             return;
         }
+        if (1) return;  // Disable requirement
         // Allow this one through
         if ($request->attributes->get('_route') === 'reg_person_register') {
             return;

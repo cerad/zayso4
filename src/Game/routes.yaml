@@ -1,0 +1,63 @@
+
+game_listing:
+    path: /listing
+    defaults:
+        _controller: game_listing_controller
+        _view:       game_listing_view_html
+        _role:       ROLE_ADMIN
+
+game_export:
+    path: /export
+    defaults:
+        _controller: game_export_controller
+        _view:       game_export_view_excel
+        _role:       ROLE_ADMIN
+
+game_import:
+    path: /import
+    defaults:
+        _controller: game_import_controller
+        _view:       game_import_view
+        _role:       ROLE_ADMIN
+
+game_report_update:
+    path: /report/update/{projectSlug}/{gameNumber}
+    defaults:
+        _controller: App\Game\Report\Update\GameReportUpdateAction
+        _view:       game_report_update_view
+        _role:       ROLE_SCORE_ENTRY
+
+game_official_assign_by_assignee:
+    path: /official/signup/{projectId}/{gameNumber}/{slot}
+    defaults:
+        slot: null
+        _controller: game_official_assign_by_assignee_controller
+        _form:       game_official_assign_by_assignee_form
+        _view:       game_official_assign_by_assignee_view
+        _role:       ROLE_REFEREE
+
+game_official_assign_by_assignor:
+    path: /official/assign/{projectId}/{gameNumber}/{slot}
+    defaults:
+        slot: null
+        _controller: game_official_assign_by_assignor_controller
+        _form:       game_official_assign_by_assignor_form
+        _view:       game_official_assign_by_assignor_view
+        _role:       ROLE_ASSIGNOR
+
+game_official_assign_by_import:
+    path: /official/import
+    defaults:
+        _controller: game_official_assign_by_import_controller
+        _form:       game_official_assign_by_import_form
+        _view:       game_official_assign_by_import_view
+        _role:       ROLE_ASSIGNOR
+
+game_official_summary:
+    path: /official/summary/{projectId}/{program}
+    defaults:
+        projectId:   AYSONationalGames2016
+        program:     Core
+        _controller: game_official_summary_controller
+        _view:       game_official_summary_view
+        _role:       ROLE_ASSIGNOR

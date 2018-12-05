@@ -15,6 +15,7 @@ class NG2019Project extends Project
     public $version = '2018-11-08';
 
     public $regYear = 'MY2015';
+    public $rainedOutKey = '0588afab19ee214eca29'; // TODO Make secure?
 
     public $welcomeMessage = 'Welcome to the AYSO National Games 2019';
 
