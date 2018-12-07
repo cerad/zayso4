@@ -45,6 +45,7 @@ class UserChecker extends UserCheckerBase implements EventSubscriberInterface
                 'username' => \PDO::PARAM_STR,
             ]
         );
+        $this->hash = null; // Just in case this ever gets called again
         //dd('checkPostAuth ' . $user->getUsername() . ' ' . $this->hash);
     }
 }

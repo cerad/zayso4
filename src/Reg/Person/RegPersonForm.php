@@ -43,24 +43,60 @@ class RegPersonForm extends AbstractForm
         }
         $formData['id'] = null;
         $this->formData = $formData;
-        dump($this->formControls);
-        dump($this->formData);
+        //dump($this->formControls);
+        //dump($this->formData);
     }
-
     public function handleRequest(Request $request)
     {
-        // TODO: Implement handleRequest() method.
+        if (!$request->isMethod('POST')) return;
+
+        $this->isPost = true;
+
+        $data = $request->request->all();
+
+        $this->submit = $data['submit_register'];
+
+        foreach($data as $key => $value)
+        {
+            if (!is_array($value)) {
+                $value = $this->filterString($data,$key);
+            }
+            if (isset($this->formControls[$key])) {
+                $meta = $this->formControls[$key];
+                if (isset($meta['transformer'])) {
+                    $transformer = $this->transformerLocator->get($meta['transformer']);
+                    $value = $transformer->reverseTransform($value);
+                }
+            }
+            $data[$key] = $value;
+        }
+        // Validate
+        // $errors = [];
+        unset($data['submit_register']);
+        unset($data['_csrf_token']);
+
+        $this->setData($data);
+
+        return;
     }
     public function render()
     {
         $csrfToken = 'TODO';
 
-        $submitLabel = $this->formData['id'] ? 'Update Registration Information' : 'Submit Registration';
+        // Still a bit screwy but avoids need two forms
+        $submitLabel = 'Submit Registration';
+        $submitValue = 'register';
+        $submitUrl   = $this->generateUrl('reg_person_register');
+        if ($this->formData['id']) {
+            $submitLabel = 'Update Registration';
+            $submitValue = 'update';
+            $submitUrl   = $this->generateUrl('reg_person_update');
+        }
 
         $html = <<<EOD
 {$this->renderFormErrors()}
 <form 
-  action="{$this->generateUrl('reg_person_register')}" method="post" 
+  action="{$submitUrl}" method="post" 
   role="form" class="form-horizontal" novalidate>
   <div class="form-group"> 
     <div class="col-sm-offset-4 col-sm-8">
@@ -73,7 +109,7 @@ class RegPersonForm extends AbstractForm
   <input type="hidden" name="_csrf_token" value="{$csrfToken}" />
   <div class="form-group"> 
     <div class="col-sm-offset-4 col-sm-8">
-      <button type="submit" name="register" value="register" class="btn btn-sm btn-primary">
+      <button type="submit" name="submit_register" value="{$submitValue}" class="btn btn-sm btn-primary">
         <span class="glyphicon glyphicon-edit"></span>
         <span>{$submitLabel}</span>
       </button>

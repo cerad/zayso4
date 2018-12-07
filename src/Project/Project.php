@@ -80,18 +80,6 @@ abstract class Project implements ProjectInterface
         }
         return null;
     }
-    public function mergeFormControls(array $controls) : array
-    {
-        $merged = [];
-        foreach($controls as $key => $meta) {
-            if (!isset($meta['type'])) {
-                $map = isset($meta['map']) ? $meta['map'] : $key;
-                $meta = \array_merge($meta,$this->formControls[$map]);
-            }
-            $merged[$key] = $meta;
-        }
-        return $merged;
-    }
     // Move this to it's own class
     protected function initFormControls() : void
     {

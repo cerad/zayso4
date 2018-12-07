@@ -7,6 +7,10 @@ use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
+/*
+ * Updates passwords to the latest and greatest hashing algo
+ * https://www.michalspacek.com/upgrading-existing-password-hashes
+*/
 class UserEncoder implements PasswordEncoderInterface
 {
     private $master;

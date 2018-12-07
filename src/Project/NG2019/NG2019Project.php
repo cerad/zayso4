@@ -44,9 +44,9 @@ class NG2019Project extends Project
     {
         $this->regPersonFormControls = [
 
-            'regName'  => [],
-            'regEmail' => [],
-            'regPhone' => [],
+            'name'  => ['map' => 'regName'],
+            'email' => ['map' => 'regEmail'],
+            'phone' => ['map' => 'regPhone'],
 
             'fedId'         => ['map' => 'fedIdAYSO'],
             'orgId'         => ['map' => 'orgIdAYSO'],

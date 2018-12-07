@@ -23,8 +23,8 @@ class RegPerson
     public $orgId;
     public $fedId;
     public $regYear;
-    public $registered;
-    public $verified;
+    public $registered = false;
+    public $verified   = false;
 
     public $name;
     public $email;
@@ -43,7 +43,77 @@ class RegPerson
 
     public $plans = [];
 
+    // Want to add this to determine latest registration
+    public $createdAt;
+
+    static private $map = [
+        'id'         => 'autoinc',
+        'projectId'  => 'string',
+        'personId'   => 'string',
+        'orgId'      => 'string',
+        'fedId'      => 'string',
+        'regYear'    => 'string',
+        'registered' => 'bool',
+        'verified'   => 'bool',
+
+        'name'      => 'string',
+        'email'     => 'string',
+        'phone'     => 'string',
+        'gender'    => 'string',
+        'dob'       => 'date',
+        'age'       => 'int',
+        'shirtSize' => 'string',
+
+        'notes'     => 'string',
+        'notesUser' => 'string',
+        'createdAt' => 'datetime',
+
+        'roles' => 'arrayx',
+        'avail' => 'array',
+        'plans' => 'array',
+    ];
+
+    // Provides access for persistence, forms and creation
+    // Starting to rediscover why having an array of property names and types is handy
+    public function toArray() : array
+    {
+        $data = [];
+        foreach(self::$map as $key => $type) {
+            $data[$key] = $this->$key;
+        }
+        return $data;
+        /*
+        $data = [
+            'id'         => $this->id,
+            'projectId'  => $this->projectId,
+            'personId'   => $this->personId,
+            'orgId'      => $this->orgId,
+            'fedId'      => $this->fedId,
+            'regYear'    => $this->regYear,
+            'registered' => $this->registered,
+            'verified'   => $this->verified,
+
+            'name'      => $this->name,
+            'email'     => $this->email,
+            'phone'     => $this->phone,
+            'gender'    => $this->gender,
+            'dob'       => $this->dob,
+            'age'       => $this->age,
+            'shirtSize' => $this->shirtSize,
+
+            'notes'     => $this->notes,
+            'notesUser' => $this->notesUser,
+            'createdAt' => $this->createdAt,
+
+            'roles' => $this->roles,
+            'avail' => $this->avail,
+            'plans' => $this->plans,
+        ];
+
+        return $data; */
+    }
     // Do this just to avoid property read only errors
+    /*
     private function init($data) : void
     {
         $this->id = isset($data['id']) ? (int)$data['id'] : null;
@@ -77,12 +147,41 @@ class RegPerson
             $this->roles[$role->role] = $role;
         }
 
+    } */
+    // Needs more work, should we even allow updates or require new objects???
+    public function fromArray(array $data) : void
+    {
+        $data = array_merge($this->toArray(),$data);
+        foreach($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
+    /**
+     * Should we do type conversions here or require calling stuff to do it?
+     */
     static public function create($data) : RegPerson
     {
-        $regPerson = new self();
-        $regPerson->init($data);
-        return $regPerson;
+        $item = new self();
+        foreach(self::$map as $key => $type) {
+            if (array_key_exists($key,$data)) {
+                switch($type) {
+                    case 'int':     $item->$key = (int )$data[$key]; break;
+                    case 'bool':    $item->$key = (bool)$data[$key]; break;
+                    case 'autoinc': $item->$key = $data[$key] ? (int)$data[$key] : null; break; // trinary nonsense
+                    case 'arrayx':  break;
+                    default:
+                        $item->$key = $data[$key];
+                }
+            }
+        }
+        if (isset($data['roles'])) {
+            $rolesProp = 'roles';
+            foreach($data['roles'] as $roleData) {
+                $role = is_array($roleData) ? RegPersonRole::create($roleData) : $roleData;
+                $item->$rolesProp[$role->role] = $role;
+            }
+        }
+        return $item;
     }
     public function addRole(RegPersonRole $role)
     {

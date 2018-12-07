@@ -52,6 +52,9 @@ final class RegPersonRegisterAction implements ActionInterface
         $formData = $this->mergePreviousRegistration($formData,$user->personId);
 
         $this->regPersonForm->setData($formData);
+
+        $this->regPersonForm->handleRequest($request);
+
         return new Response($this->render());
     }
     private function mergePreviousRegistration(array $formData, string $personId) : array
