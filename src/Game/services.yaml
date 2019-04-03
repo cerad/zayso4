@@ -1,0 +1,14 @@
+# Games
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Game\:
+        resource: './*'
+        exclude:  './{GamesConnection.php}'
+
+    App\Game\GamesConnection: '@doctrine.dbal.games_connection'

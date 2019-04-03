@@ -5,7 +5,8 @@ imports:
     - { resource: '../src/Project/services.yaml' }
     - { resource: '../src/Ayso/services.yaml' }
     - { resource: '../src/User/services.yaml' }
-    - { resource: '../src/Reg/services.yaml' }
+    - { resource: '../src/Game/services.yaml' }
+    - { resource: '../src/Reg/services.yaml'  }
 
 services:
 

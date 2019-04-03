@@ -150,7 +150,7 @@ EOT;
   </div>
   <div class="panel-body">
     <ul>
-      <li><a href="{$this->generateUrl('game_listing')}">View Teams</a></li>
+      <li><a href="{$this->generateUrl('reg_team_listing')}">View Teams</a></li>
       <li><a href="{$this->generateUrl('reg_team_export2')}">Export Teams</a></li>
 EOT;
         if ($this->isGranted('ROLE_ADMIN') || !$this->restrict) {

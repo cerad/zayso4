@@ -1,4 +1,11 @@
 # Definitely needs some cleanup but export2 and import2 seems to be used
+reg_team_listing:
+    path: /listing
+    defaults:
+        _controller:    App\Reg\Team\Listing\RegTeamListingAction
+        _view:          regteam_export_xls
+        _role:          ROLE_ADMIN
+
 regteam_export:
     path: /export
     defaults:
