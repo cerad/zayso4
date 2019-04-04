@@ -59,6 +59,7 @@ class RegTeam implements IRegTeam
         if (isset($data['teamKey' ])) $this->teamKey  = $data['teamKey'];
         if (isset($data['teamName'])) $this->teamName = $data['teamKey'];
 
+        // Type casting for integers should not be necessary
         if (isset($data['teamNumber'])) $this->teamNumber = (int)$data['teamNumber'];
         if (isset($data['teamPoints'])) $this->teamPoints = (int)$data['teamPoints'];
 
@@ -72,10 +73,14 @@ class RegTeam implements IRegTeam
 
         $this->poolTeams = [];
     }
+    public function __construct(array $data)
+    {
+        $this->init($data);
+    }
     static public function create(array $data) : RegTeam
     {
-        $team = new self();
-        $team->init($data);
+        $team = new self($data);
+        //$team->init($data);
         return $team;
     }
 }

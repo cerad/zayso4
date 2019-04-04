@@ -7,9 +7,10 @@ use App\Core\AuthorizationTrait;
 use App\Core\RouterTrait;
 use App\Project\Project;
 
-use App\Reg\Team\RegTeam;
+//  App\Reg\Team\RegTeam;
 use App\Reg\Team\RegTeamFinder;
 
+use App\Reg\Team\RegTeams;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +38,7 @@ class RegTeamListingAction implements ActionInterface
 
         return new Response($this->render($regTeams));
     }
-    private function render($regTeams) : string
+    private function render(RegTeams $regTeams) : string
     {
         $content = <<<EOT
 <div class="container no-disc">
@@ -52,22 +53,21 @@ EOT;
 EOT;
         return $this->project->pageTemplate->render($content);
     }
-
-    /**
-     * @param $regTeams RegTeam[]
-     */
-    private function renderRegTeams($regTeams) : string
+    private function renderRegTeams(RegTeams $regTeams) : string
     {
         // Would this be any cleaner as a twig template?
         $html = <<<EOT
 <table border="1">
-  <tr><td>ID</td><td>Name</td></tr>
+  <tr><td>ID</td><td>Key</td><td>Number</td><td>Name</td><td>Org</td></tr>
 EOT;
         foreach($regTeams as $regTeam) {
             $html .= <<<EOT
   <tr>
     <td>{$regTeam->regTeamId}</td>
+    <td>{$regTeam->teamKey}</td>
+    <td>{$regTeam->teamNumber}</td>
     <td>{$regTeam->teamName}</td>
+    <td>{$regTeam->orgView}</td>
   </tr>
 EOT;
 

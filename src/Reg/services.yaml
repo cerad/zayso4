@@ -9,7 +9,7 @@ services:
 
     App\Reg\:
         resource: './*'
-        exclude:  './{RegConnection.php}'
+        #exclude:  './{RegConnection.php}'
 
     App\Reg\RegConnection: '@doctrine.dbal.reg_connection'
 

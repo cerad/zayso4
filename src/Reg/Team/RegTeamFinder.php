@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Reg\Team;
 
 use App\Core\QueryBuilderTrait;
@@ -17,10 +19,11 @@ class RegTeamFinder
     /** =======================================================================
      *  @return RegTeam[]
      */
-    public function findRegTeams(array $criteria)
+    public function findRegTeams(array $criteria) : RegTeams
     {
         $qb = $this->regConn->createQueryBuilder();
 
+        // Select * should probably be avoided
         $qb->select('*')->from('regTeams')->orderBy('regTeamId');
 
         $whereMeta = [
@@ -33,14 +36,14 @@ class RegTeamFinder
         ];
         list($values,$types) = $this->addWhere($qb,$whereMeta,$criteria);
         $stmt = $qb->getConnection()->executeQuery($qb->getSQL(),$values,$types);
-        $regTeams = [];
-        while($regTeamRow = $stmt->fetch()) {
-            $regTeams[$regTeamRow['regTeamId']] = RegTeam::create($regTeamRow);
+        $regTeams = new RegTeams();
+        while($regTeamRow = $stmt->fetch()) { dump($regTeamRow);
+            $regTeams[$regTeamRow['regTeamId']] = new RegTeam($regTeamRow);
         }
         if (count($regTeams) < 1) {
-            return [];
+            return $regTeams;
         }
-        // Join the pool keys, probably shoud use pool finder here
+        // Join the pool keys, probably should use pool finder here
         /*
         $sql = 'SELECT * FROM poolTeams WHERE regTeamId IN (?) ORDER BY regTeamId,poolKey';
         $stmt = $this->gameConn->executeQuery($sql,[array_keys($regTeams)],[Connection::PARAM_STR_ARRAY]);

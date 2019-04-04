@@ -28,6 +28,7 @@ doctrine:
                 url: '%env(DATABASE_URL_REG)%'
             reg:
                 driver: 'pdo_mysql'
+                options: {20: false}
                 server_version: '5.7'
                 charset: utf8mb4
                 default_table_options:
@@ -37,6 +38,7 @@ doctrine:
                 url: '%env(DATABASE_URL_REG)%'
             games:
                 driver: 'pdo_mysql'
+                options: {20: false}
                 server_version: '5.7'
                 charset: utf8mb4
                 default_table_options:

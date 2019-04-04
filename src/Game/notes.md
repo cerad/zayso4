@@ -53,3 +53,12 @@ poolTeams             regTeams
   regTeamName           teamName
   regTeamPoints         teamPoints
   
+================
+The combo of program,gender,age,division should be reduced to a single key such as U10BCore
+Call it Category for now
+Category itself should  have 1 to many relations with applicable sub categories
+
+Probably need an individual query to get list of applicable categories.
+Did this in the 2014 version.
+Instead of an actual query, could have a list of categories and then filter against it.
+
