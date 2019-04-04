@@ -30,3 +30,7 @@ services:
     App\Admin\:
         resource: '../src/Admin/*'
 
+    App\Pool\:
+        resource: '../src/Pool/*'
+
+

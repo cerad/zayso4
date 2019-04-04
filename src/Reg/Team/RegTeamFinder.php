@@ -16,9 +16,6 @@ class RegTeamFinder
     {
         $this->regConn = $regConn;
     }
-    /** =======================================================================
-     *  @return RegTeam[]
-     */
     public function findRegTeams(array $criteria) : RegTeams
     {
         $qb = $this->regConn->createQueryBuilder();
